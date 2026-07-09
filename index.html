@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Meta tags for SEO -->
+    <title>Emotion & Posture AI - Face & Body Tracker</title>
+    <meta name="description" content="A real-time, browser-native AI application that detects human emotions and body postures using Google MediaPipe. Support for live webcam and image upload." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Background glows -->
+    <div class="glow-bg glow-bg-1"></div>
+    <div class="glow-bg glow-bg-2"></div>
+
+    <div id="app" class="dashboard-container">
+      
+      <!-- Top Loading / Splash Screen -->
+      <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-box">
+          <div class="loading-logo">
+            <span class="logo-emoji">🧠</span>
+            <span class="logo-text">Emotion & Posture<span class="highlight">.AI</span></span>
+          </div>
+          <div class="spinner"></div>
+          <p id="loading-status" class="loading-status">Initializing neural models...</p>
+          <div class="loading-bar-container">
+            <div id="loading-bar" class="loading-bar" style="width: 10%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="header-logo">
+          <span class="logo-icon">🔮</span>
+          <h1>Emotion & Posture <span class="badge">AI</span></h1>
+        </div>
+        <p class="subtitle">Real-time Emotion Synthesis & Body Posture Analytics</p>
+        <div class="system-status">
+          <span class="status-indicator online"></span>
+          <span id="model-status-text">Models Loaded: MediaPipe Face/Pose & Hugging Face ViT</span>
+        </div>
+      </header>
+
+      <!-- Main Layout -->
+      <main class="dashboard-grid">
+        
+        <!-- Left Column: Input Viewport & Controls -->
+        <section class="card viewport-card">
+          <div class="card-header">
+            <div class="tabs-container">
+              <button id="tab-btn-camera" class="tab-btn active">
+                <span class="tab-icon">📹</span> Live Camera
+              </button>
+              <button id="tab-btn-upload" class="tab-btn">
+                <span class="tab-icon">📤</span> Upload Image
+              </button>
+              <button id="tab-btn-validation" class="tab-btn">
+                <span class="tab-icon">📊</span> Dataset Validation
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab Content: Live Camera -->
+          <div id="tab-content-camera" class="tab-content active">
+            <div class="viewport-wrapper">
+              <video id="webcam-video" autoplay playsinline muted></video>
+              <canvas id="webcam-canvas" class="drawing-canvas"></canvas>
+              
+              <!-- Video Placeholder Overlay -->
+              <div id="webcam-placeholder" class="viewport-placeholder">
+                <div class="placeholder-content">
+                  <div class="placeholder-icon">📷</div>
+                  <h3>Camera Inactive</h3>
+                  <p>Grant permission and start the feed to analyze your face and posture.</p>
+                  <button id="btn-start-camera" class="btn btn-primary">Start Camera Stream</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="viewport-controls">
+              <button id="btn-stop-camera" class="btn btn-secondary" disabled>Stop Stream</button>
+              <div class="fps-counter">
+                FPS: <span id="val-fps">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Image Upload -->
+          <div id="tab-content-upload" class="tab-content">
+            <div class="viewport-wrapper">
+              <img id="upload-preview" alt="Upload Preview" style="display: none;" />
+              <canvas id="upload-canvas" class="drawing-canvas"></canvas>
+              
+              <!-- Drag and Drop Zone -->
+              <div id="drop-zone" class="viewport-placeholder drop-zone">
+                <div class="placeholder-content">
+                  <div class="placeholder-icon">🖼️</div>
+                  <h3>Drag & Drop Image</h3>
+                  <p>Or click to browse from your device. Supports JPEG, PNG, WEBP.</p>
+                  <input type="file" id="file-input" accept="image/*" style="display: none;" />
+                  <button id="btn-browse-file" class="btn btn-primary">Browse File</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="viewport-controls">
+              <button id="btn-reset-upload" class="btn btn-secondary" disabled>Reset Image</button>
+              <div id="upload-status" class="file-name-label">No file selected</div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Dataset Validation -->
+          <div id="tab-content-validation" class="tab-content" style="display: none;">
+            <div class="validation-panel">
+              
+              <!-- Folder Config Card -->
+              <div class="validation-config-card">
+                <h3>Dataset Configuration</h3>
+                
+                <div class="dataset-source-toggle">
+                  <label class="radio-label">
+                    <input type="radio" name="dataset-source" id="radio-source-preloaded" checked />
+                    <span>📦 Use Preloaded Dataset (<span id="val-preloaded-count">0</span> files)</span>
+                  </label>
+                  <label class="radio-label" style="margin-left: 16px;">
+                    <input type="radio" name="dataset-source" id="radio-source-custom" />
+                    <span>📁 Select Custom Folder</span>
+                  </label>
+                </div>
+
+                <div id="custom-folder-actions" class="config-actions" style="display: none; margin-top: 10px;">
+                  <input type="file" id="validation-dir-input" webkitdirectory directory multiple style="display: none;" />
+                  <button id="btn-select-validation-dir" class="btn btn-secondary">
+                    📁 Choose Folder
+                  </button>
+                </div>
+
+                <div class="config-settings" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 16px;">
+                  <div class="dropdown-control">
+                    <label for="validation-limit">Max Samples:</label>
+                    <select id="validation-limit">
+                      <option value="50">50 images</option>
+                      <option value="100" selected>100 images</option>
+                      <option value="250">250 images</option>
+                      <option value="500">500 images</option>
+                      <option value="1000">1000 images</option>
+                      <option value="-1">All images</option>
+                    </select>
+                  </div>
+
+                  <div class="dropdown-control">
+                    <label for="validation-split-filter">Split Filter:</label>
+                    <select id="validation-split-filter">
+                      <option value="all" selected>All splits</option>
+                      <option value="test">test split only</option>
+                      <option value="train">train split only</option>
+                    </select>
+                  </div>
+                  
+                  <div class="dropdown-control">
+                    <label for="validation-model-engine">Engine Model:</label>
+                    <select id="validation-model-engine" style="background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); font-size: 14px; padding: 4px 8px; cursor: pointer; outline: none;">
+                      <option value="auto" selected>✨ Auto-Select (Best)</option>
+                      <option value="vit">🤖 Hugging Face ViT</option>
+                      <option value="mlp">🧠 Custom MLP</option>
+                      <option value="heuristics">📐 Baseline Default</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="validation-scan-status" class="scan-status-alert info">
+                  Initializing default preloaded dataset...
+                </div>
+              </div>
+
+              <!-- Live Execution Controls & Active Preview -->
+              <div id="validation-progress-panel" class="validation-progress-panel" style="display: none;">
+                <div class="progress-header">
+                  <span id="validation-run-status">Status: Preparing...</span>
+                  <span id="validation-speed">-- ms / img</span>
+                </div>
+                
+                <div class="progress-bar-outer">
+                  <div id="validation-progress-fill" class="progress-bar-inner" style="width: 0%;"></div>
+                </div>
+                <div class="progress-counts">
+                  Processed: <span id="val-processed-count">0</span> / <span id="val-total-count">0</span>
+                </div>
+
+                <div class="validation-actions">
+                  <button id="btn-run-validation" class="btn btn-success" disabled>▶ Run Validation</button>
+                  <button id="btn-pause-validation" class="btn btn-warning" style="display: none;">⏸ Pause</button>
+                  <button id="btn-cancel-validation" class="btn btn-danger" disabled>⏹ Reset</button>
+                </div>
+
+                <!-- Currently evaluating preview -->
+                <div class="current-eval-preview">
+                  <h4>Currently Evaluating</h4>
+                  <div class="preview-box">
+                    <canvas id="validation-preview-canvas" width="120" height="120"></canvas>
+                    <div class="preview-meta">
+                      <div id="val-preview-filename" class="text-truncate">filename.jpg</div>
+                      <div class="preview-labels">
+                        <div>Actual: <span id="val-preview-actual" class="badge">--</span></div>
+                        <div>Predict: <span id="val-preview-predict" class="badge">--</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Overlay Settings -->
+          <div class="settings-panel">
+            <h4>Visualization Overlays</h4>
+            <div class="checkbox-group">
+              <label class="switch-label">
+                <input type="checkbox" id="chk-show-face" checked />
+                <span class="slider"></span>
+                Face Mesh
+              </label>
+              <label class="switch-label">
+                <input type="checkbox" id="chk-show-pose" checked />
+                <span class="slider"></span>
+                Pose Skeleton
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column: Results & Analytics -->
+        <section class="analysis-column">
+          
+          <div id="realtime-results">
+            <!-- Model Selection Control -->
+            <div class="card settings-card" style="margin-bottom: var(--spacing-md);">
+              <h3>Classification Engine</h3>
+              <div class="form-group" style="margin-top: var(--spacing-sm);">
+                <label for="select-model-engine" style="display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">Select Model</label>
+                <select id="select-model-engine" class="btn" style="width: 100%; padding: 8px 12px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); font-size: 14px; cursor: pointer; outline: none;">
+                  <option value="auto">✨ Auto-Select (Best Available)</option>
+                  <option value="vit">🤖 Hugging Face ViT (Vision Transformer)</option>
+                  <option value="mlp">🧠 Custom Neural Network (MLP)</option>
+                  <option value="heuristics">📐 Baseline Default (Neutral)</option>
+                </select>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 12px; color: var(--text-muted);">
+                <span id="active-model-dot" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #EF4444;"></span>
+                <span>Active: <strong id="active-model-label" style="color: var(--text-main);">Loading...</strong></span>
+              </div>
+            </div>
+
+            <!-- Card 1: Dominant Emotion -->
+            <div class="card emotion-card">
+              <h3>Emotion synthesis</h3>
+              <div class="emotion-display">
+                <div id="emotion-emoji" class="large-emoji">😐</div>
+                <div class="emotion-info">
+                  <div id="emotion-label" class="primary-label">Neutral</div>
+                  <div class="confidence-badge">
+                    Confidence: <span id="emotion-confidence">100%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Real-time bar chart of emotions -->
+              <div class="emotion-chart">
+                <div class="chart-bar-row">
+                  <span class="bar-label">😊 Happy</span>
+                  <div class="bar-track">
+                    <div id="bar-happy" class="bar-fill" style="width: 0%; background: #10B981;"></div>
+                  </div>
+                  <span id="val-happy" class="bar-value">0%</span>
+                </div>
+                
+                <div class="chart-bar-row">
+                  <span class="bar-label">😢 Sad</span>
+                  <div class="bar-track">
+                    <div id="bar-sad" class="bar-fill" style="width: 0%; background: #3B82F6;"></div>
+                  </div>
+                  <span id="val-sad" class="bar-value">0%</span>
+                </div>
+                
+                <div class="chart-bar-row">
+                  <span class="bar-label">😰 Anxiety</span>
+                  <div class="bar-track">
+                    <div id="bar-anxiety" class="bar-fill" style="width: 0%; background: #8B5CF6;"></div>
+                  </div>
+                  <span id="val-anxiety" class="bar-value">0%</span>
+                </div>
+
+                <div class="chart-bar-row">
+                  <span class="bar-label">😡 Angry</span>
+                  <div class="bar-track">
+                    <div id="bar-angry" class="bar-fill" style="width: 0%; background: #EF4444;"></div>
+                  </div>
+                  <span id="val-angry" class="bar-value">0%</span>
+                </div>
+
+                <div class="chart-bar-row">
+                  <span class="bar-label">😲 Surprise</span>
+                  <div class="bar-track">
+                    <div id="bar-surprised" class="bar-fill" style="width: 0%; background: #F59E0B;"></div>
+                  </div>
+                  <span id="val-surprised" class="bar-value">0%</span>
+                </div>
+
+                <div class="chart-bar-row">
+                  <span class="bar-label">🤢 Disgust</span>
+                  <div class="bar-track">
+                    <div id="bar-disgust" class="bar-fill" style="width: 0%; background: #84CC16;"></div>
+                  </div>
+                  <span id="val-disgust" class="bar-value">0%</span>
+                </div>
+
+                <div class="chart-bar-row">
+                  <span class="bar-label">😐 Neutral</span>
+                  <div class="bar-track">
+                    <div id="bar-neutral" class="bar-fill" style="width: 100%; background: #6B7280;"></div>
+                  </div>
+                  <span id="val-neutral" class="bar-value">100%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Posture Analytics -->
+            <div class="card posture-card">
+              <h3>Body posture analytics</h3>
+              <div class="posture-display">
+                <div id="posture-icon" class="large-icon">👤</div>
+                <div class="posture-info">
+                  <div id="posture-label" class="primary-label">Unknown</div>
+                  <p id="posture-details" class="posture-details">Awaiting full body detection. Hips and knees must be in view.</p>
+                </div>
+              </div>
+
+              <!-- Joint Angle Gauges -->
+              <div class="angles-grid">
+                <div class="angle-stat-box">
+                  <span class="stat-title">Hip angle</span>
+                  <span id="val-hip-angle" class="stat-value">--°</span>
+                  <p class="stat-desc">Shoulder - Hip - Knee</p>
+                </div>
+                <div class="angle-stat-box">
+                  <span class="stat-title">Knee angle</span>
+                  <span id="val-knee-angle" class="stat-value">--°</span>
+                  <p class="stat-desc">Hip - Knee - Ankle</p>
+                </div>
+                <div class="angle-stat-box">
+                  <span class="stat-title">Trunk tilt</span>
+                  <span id="val-trunk-angle" class="stat-value">--°</span>
+                  <p class="stat-desc">Body alignment to horiz.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Validation Results Dashboard -->
+          <div id="validation-results" style="display: none;">
+            
+            <!-- Overall Stats Card -->
+            <div class="card val-summary-card">
+              <h3>Validation Summary</h3>
+              <div class="val-summary-grid">
+                
+                <div class="val-stat-box highlight-glow">
+                  <span class="stat-title">Overall Accuracy</span>
+                  <span id="val-stat-accuracy" class="stat-value text-glow">--%</span>
+                  <p class="stat-desc">Matched / Total evaluated</p>
+                </div>
+                
+                <div class="val-stat-box">
+                  <span class="stat-title">Processed</span>
+                  <span id="val-stat-processed" class="stat-value">0 / 0</span>
+                  <p class="stat-desc">Total scanned files</p>
+                </div>
+
+                <div class="val-stat-box">
+                  <span class="stat-title">Face Detection Rate</span>
+                  <span id="val-stat-detection-rate" class="stat-value">--%</span>
+                  <p class="stat-desc">Faces detected in dataset</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Detailed Breakdown Table Card -->
+            <div class="card val-breakdown-card">
+              <h3>Per-Emotion Accuracy</h3>
+              <div class="table-container">
+                <table class="val-table">
+                  <thead>
+                    <tr>
+                      <th>Emotion</th>
+                      <th>Samples</th>
+                      <th>True Positives</th>
+                      <th>False Positives</th>
+                      <th>Accuracy</th>
+                    </tr>
+                  </thead>
+                  <tbody id="val-breakdown-tbody">
+                    <!-- Dynamic rows populated in JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Confusion Matrix Grid Card -->
+            <div class="card val-matrix-card">
+              <h3>Confusion Matrix (Actual vs Predicted)</h3>
+              <p class="matrix-desc">Rows represent actual labels; columns represent predicted labels.</p>
+              <div class="confusion-matrix-container">
+                <div id="confusion-matrix-grid" class="confusion-matrix-grid">
+                  <!-- Dynamic grid generated in JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Validation Log Card -->
+            <div class="card val-logs-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+                <h3 style="margin: 0;">Evaluation Logs</h3>
+                <button id="btn-copy-val-logs" class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px; height: auto;">📋 Copy CSV</button>
+              </div>
+              <div class="table-container scrollable-table">
+                <table class="val-logs-table">
+                  <thead>
+                    <tr>
+                      <th>Preview</th>
+                      <th>File Path</th>
+                      <th>Actual</th>
+                      <th>Predicted</th>
+                      <th>Conf.</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+                  <tbody id="val-logs-tbody">
+                    <tr>
+                      <td colspan="6" class="text-center text-muted">Awaiting directory upload...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Card 3: System Logs (Always Visible) -->
+          <div class="card logs-card" style="margin-top: var(--spacing-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+              <h3 style="margin: 0;">Inference Event Feed</h3>
+              <button id="btn-copy-system-logs" class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px; height: auto;">📋 Copy Logs</button>
+            </div>
+            <div id="logs-container" class="logs-container">
+              <div class="log-entry system">[SYSTEM] Ready. Select Camera or Upload Image.</div>
+            </div>
+          </div>
+          
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>Built with Google MediaPipe Web APIs • 100% Client-Side Privacy Enabled</p>
+      </footer>
+    </div>
+
+    <!-- App Module Entry -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

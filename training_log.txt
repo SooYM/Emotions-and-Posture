@@ -1,0 +1,395 @@
+
+==========================================
+TRAINING SESSION STARTED AT: 2026-07-09 12:18:07
+Requested Epochs in this Session: 15
+Total Epochs Before Session: 0
+==========================================
+Epoch 1 (Session Epoch 1/15) | Loss: 1.6399 | Train Acc: 46.75% | Test Acc: 46.28% | Time: 0.03s
+Epoch 2 (Session Epoch 2/15) | Loss: 1.3766 | Train Acc: 50.26% | Test Acc: 49.42% | Time: 0.02s
+Epoch 3 (Session Epoch 3/15) | Loss: 1.3048 | Train Acc: 51.68% | Test Acc: 50.66% | Time: 0.02s
+Epoch 4 (Session Epoch 4/15) | Loss: 1.2743 | Train Acc: 52.37% | Test Acc: 51.36% | Time: 0.02s
+Epoch 5 (Session Epoch 5/15) | Loss: 1.2577 | Train Acc: 52.77% | Test Acc: 51.82% | Time: 0.02s
+Epoch 6 (Session Epoch 6/15) | Loss: 1.2471 | Train Acc: 52.99% | Test Acc: 52.07% | Time: 0.02s
+Epoch 7 (Session Epoch 7/15) | Loss: 1.2397 | Train Acc: 53.13% | Test Acc: 52.32% | Time: 0.02s
+Epoch 8 (Session Epoch 8/15) | Loss: 1.2340 | Train Acc: 53.45% | Test Acc: 52.46% | Time: 0.02s
+Epoch 9 (Session Epoch 9/15) | Loss: 1.2293 | Train Acc: 53.63% | Test Acc: 52.42% | Time: 0.02s
+Epoch 10 (Session Epoch 10/15) | Loss: 1.2254 | Train Acc: 53.67% | Test Acc: 52.47% | Time: 0.02s
+Epoch 11 (Session Epoch 11/15) | Loss: 1.2221 | Train Acc: 53.68% | Test Acc: 52.75% | Time: 0.02s
+Epoch 12 (Session Epoch 12/15) | Loss: 1.2189 | Train Acc: 53.78% | Test Acc: 52.89% | Time: 0.02s
+Epoch 13 (Session Epoch 13/15) | Loss: 1.2162 | Train Acc: 53.82% | Test Acc: 53.02% | Time: 0.02s
+Epoch 14 (Session Epoch 14/15) | Loss: 1.2137 | Train Acc: 53.90% | Test Acc: 53.14% | Time: 0.02s
+Epoch 15 (Session Epoch 15/15) | Loss: 1.2116 | Train Acc: 54.02% | Test Acc: 53.19% | Time: 0.02s
+==========================================
+SESSION FINISHED AT: 2026-07-09 12:18:07
+Session Duration: 0.33s
+Total Cumulative Epochs: 15
+Final Test Set Accuracy: 53.19%
+==========================================
+
+==========================================
+TRAINING SESSION STARTED AT: 2026-07-09 12:19:14
+Requested Epochs in this Session: 10
+Total Epochs Before Session: 15
+==========================================
+Epoch 16 (Session Epoch 1/10) | Loss: 1.2094 | Train Acc: 54.03% | Test Acc: 53.25% | Time: 0.02s
+Epoch 17 (Session Epoch 2/10) | Loss: 1.2075 | Train Acc: 54.12% | Test Acc: 53.34% | Time: 0.02s
+Epoch 18 (Session Epoch 3/10) | Loss: 1.2056 | Train Acc: 54.20% | Test Acc: 53.41% | Time: 0.02s
+Epoch 19 (Session Epoch 4/10) | Loss: 1.2039 | Train Acc: 54.33% | Test Acc: 53.56% | Time: 0.02s
+Epoch 20 (Session Epoch 5/10) | Loss: 1.2021 | Train Acc: 54.38% | Test Acc: 53.59% | Time: 0.02s
+Epoch 21 (Session Epoch 6/10) | Loss: 1.2005 | Train Acc: 54.43% | Test Acc: 53.58% | Time: 0.02s
+Epoch 22 (Session Epoch 7/10) | Loss: 1.1989 | Train Acc: 54.45% | Test Acc: 53.64% | Time: 0.02s
+Epoch 23 (Session Epoch 8/10) | Loss: 1.1975 | Train Acc: 54.53% | Test Acc: 53.78% | Time: 0.02s
+Epoch 24 (Session Epoch 9/10) | Loss: 1.1961 | Train Acc: 54.59% | Test Acc: 53.91% | Time: 0.02s
+Epoch 25 (Session Epoch 10/10) | Loss: 1.1947 | Train Acc: 54.65% | Test Acc: 53.94% | Time: 0.02s
+==========================================
+SESSION FINISHED AT: 2026-07-09 12:19:14
+Session Duration: 0.22s
+Total Cumulative Epochs: 25
+Final Test Set Accuracy: 53.94%
+==========================================
+
+==========================================
+TRAINING SESSION STARTED AT: 2026-07-09 12:21:38
+Requested Epochs in this Session: 10
+Total Epochs Before Session: 0
+==========================================
+Epoch 1 (Session Epoch 1/10) | Loss: 1.9510 | Train Acc: 48.81% | Test Acc: 48.57% | Time: 0.06s
+Epoch 2 (Session Epoch 2/10) | Loss: 1.5841 | Train Acc: 50.98% | Test Acc: 50.30% | Time: 0.06s
+Epoch 3 (Session Epoch 3/10) | Loss: 2.1040 | Train Acc: 52.16% | Test Acc: 51.61% | Time: 0.06s
+Epoch 4 (Session Epoch 4/10) | Loss: 1.8049 | Train Acc: 53.00% | Test Acc: 51.99% | Time: 0.06s
+Epoch 5 (Session Epoch 5/10) | Loss: 0.5654 | Train Acc: 52.76% | Test Acc: 52.00% | Time: 0.06s
+Epoch 6 (Session Epoch 6/10) | Loss: 1.2769 | Train Acc: 53.37% | Test Acc: 52.36% | Time: 0.06s
+Epoch 7 (Session Epoch 7/10) | Loss: 2.9216 | Train Acc: 53.36% | Test Acc: 52.58% | Time: 0.06s
+Epoch 8 (Session Epoch 8/10) | Loss: 0.8344 | Train Acc: 53.53% | Test Acc: 52.81% | Time: 0.06s
+Epoch 9 (Session Epoch 9/10) | Loss: 2.3268 | Train Acc: 53.75% | Test Acc: 52.64% | Time: 0.06s
+Epoch 10 (Session Epoch 10/10) | Loss: 1.3153 | Train Acc: 53.57% | Test Acc: 52.80% | Time: 0.06s
+==========================================
+SESSION FINISHED AT: 2026-07-09 12:21:39
+Session Duration: 0.64s
+Total Cumulative Epochs: 10
+Final Test Set Accuracy: 52.80%
+==========================================
+
+==========================================
+TRAINING SESSION STARTED AT: 2026-07-09 12:23:05
+Requested Epochs in this Session: 150
+Total Epochs Before Session: 10
+==========================================
+Epoch 11 (Session Epoch 1/150) | Loss: 2.3690 | Train Acc: 53.88% | Test Acc: 53.17% | Time: 0.06s
+Epoch 12 (Session Epoch 2/150) | Loss: 3.1900 | Train Acc: 53.94% | Test Acc: 53.16% | Time: 0.06s
+Epoch 13 (Session Epoch 3/150) | Loss: 1.8726 | Train Acc: 54.08% | Test Acc: 53.19% | Time: 0.06s
+Epoch 14 (Session Epoch 4/150) | Loss: 0.5783 | Train Acc: 54.08% | Test Acc: 53.47% | Time: 0.06s
+Epoch 15 (Session Epoch 5/150) | Loss: 1.5946 | Train Acc: 54.14% | Test Acc: 53.66% | Time: 0.06s
+Epoch 16 (Session Epoch 6/150) | Loss: 2.6419 | Train Acc: 54.27% | Test Acc: 53.47% | Time: 0.06s
+Epoch 17 (Session Epoch 7/150) | Loss: 0.6387 | Train Acc: 54.28% | Test Acc: 53.92% | Time: 0.06s
+Epoch 18 (Session Epoch 8/150) | Loss: 0.6232 | Train Acc: 54.28% | Test Acc: 53.66% | Time: 0.06s
+Epoch 19 (Session Epoch 9/150) | Loss: 0.7068 | Train Acc: 54.25% | Test Acc: 53.84% | Time: 0.06s
+Epoch 20 (Session Epoch 10/150) | Loss: 1.5614 | Train Acc: 54.39% | Test Acc: 53.98% | Time: 0.06s
+Epoch 21 (Session Epoch 11/150) | Loss: 2.5050 | Train Acc: 54.33% | Test Acc: 53.95% | Time: 0.06s
+Epoch 22 (Session Epoch 12/150) | Loss: 0.7726 | Train Acc: 54.41% | Test Acc: 54.09% | Time: 0.06s
+Epoch 23 (Session Epoch 13/150) | Loss: 0.6911 | Train Acc: 54.43% | Test Acc: 53.72% | Time: 0.06s
+Epoch 24 (Session Epoch 14/150) | Loss: 2.2785 | Train Acc: 54.43% | Test Acc: 54.17% | Time: 0.06s
+Epoch 25 (Session Epoch 15/150) | Loss: 3.2251 | Train Acc: 54.70% | Test Acc: 53.92% | Time: 0.06s
+Epoch 26 (Session Epoch 16/150) | Loss: 1.8591 | Train Acc: 54.36% | Test Acc: 53.89% | Time: 0.06s
+Epoch 27 (Session Epoch 17/150) | Loss: 2.4279 | Train Acc: 54.64% | Test Acc: 54.09% | Time: 0.06s
+Epoch 28 (Session Epoch 18/150) | Loss: 1.4924 | Train Acc: 54.33% | Test Acc: 53.70% | Time: 0.06s
+Epoch 29 (Session Epoch 19/150) | Loss: 2.3050 | Train Acc: 54.57% | Test Acc: 53.98% | Time: 0.06s
+Epoch 30 (Session Epoch 20/150) | Loss: 2.7295 | Train Acc: 54.63% | Test Acc: 54.22% | Time: 0.06s
+Epoch 31 (Session Epoch 21/150) | Loss: 2.5806 | Train Acc: 54.74% | Test Acc: 54.02% | Time: 0.06s
+Epoch 32 (Session Epoch 22/150) | Loss: 1.5767 | Train Acc: 54.85% | Test Acc: 54.00% | Time: 0.06s
+Epoch 33 (Session Epoch 23/150) | Loss: 0.8257 | Train Acc: 54.75% | Test Acc: 54.34% | Time: 0.06s
+Epoch 34 (Session Epoch 24/150) | Loss: 0.7891 | Train Acc: 54.81% | Test Acc: 54.36% | Time: 0.06s
+Epoch 35 (Session Epoch 25/150) | Loss: 0.9719 | Train Acc: 54.79% | Test Acc: 54.45% | Time: 0.06s
+Epoch 36 (Session Epoch 26/150) | Loss: 4.6996 | Train Acc: 54.91% | Test Acc: 54.25% | Time: 0.06s
+Epoch 37 (Session Epoch 27/150) | Loss: 2.0665 | Train Acc: 54.94% | Test Acc: 54.06% | Time: 0.06s
+Epoch 38 (Session Epoch 28/150) | Loss: 2.4080 | Train Acc: 54.72% | Test Acc: 54.47% | Time: 0.06s
+Epoch 39 (Session Epoch 29/150) | Loss: 1.3854 | Train Acc: 54.74% | Test Acc: 54.31% | Time: 0.06s
+Epoch 40 (Session Epoch 30/150) | Loss: 0.8153 | Train Acc: 54.95% | Test Acc: 54.50% | Time: 0.06s
+Epoch 41 (Session Epoch 31/150) | Loss: 2.2005 | Train Acc: 54.94% | Test Acc: 54.75% | Time: 0.06s
+Epoch 42 (Session Epoch 32/150) | Loss: 1.0197 | Train Acc: 55.07% | Test Acc: 54.19% | Time: 0.06s
+Epoch 43 (Session Epoch 33/150) | Loss: 1.4855 | Train Acc: 54.99% | Test Acc: 54.28% | Time: 0.06s
+Epoch 44 (Session Epoch 34/150) | Loss: 2.1127 | Train Acc: 55.06% | Test Acc: 54.45% | Time: 0.06s
+Epoch 45 (Session Epoch 35/150) | Loss: 0.9048 | Train Acc: 55.11% | Test Acc: 54.50% | Time: 0.06s
+Epoch 46 (Session Epoch 36/150) | Loss: 2.2487 | Train Acc: 55.28% | Test Acc: 54.53% | Time: 0.06s
+Epoch 47 (Session Epoch 37/150) | Loss: 1.3302 | Train Acc: 55.15% | Test Acc: 54.41% | Time: 0.06s
+Epoch 48 (Session Epoch 38/150) | Loss: 2.2359 | Train Acc: 55.25% | Test Acc: 54.31% | Time: 0.06s
+Epoch 49 (Session Epoch 39/150) | Loss: 2.9263 | Train Acc: 55.21% | Test Acc: 54.61% | Time: 0.06s
+Epoch 50 (Session Epoch 40/150) | Loss: 0.9928 | Train Acc: 55.22% | Test Acc: 54.45% | Time: 0.06s
+Epoch 51 (Session Epoch 41/150) | Loss: 0.8709 | Train Acc: 55.16% | Test Acc: 54.34% | Time: 0.06s
+Epoch 52 (Session Epoch 42/150) | Loss: 0.8780 | Train Acc: 55.29% | Test Acc: 54.39% | Time: 0.06s
+Epoch 53 (Session Epoch 43/150) | Loss: 2.2111 | Train Acc: 55.31% | Test Acc: 54.53% | Time: 0.06s
+Epoch 54 (Session Epoch 44/150) | Loss: 3.3624 | Train Acc: 55.38% | Test Acc: 54.44% | Time: 0.06s
+Epoch 55 (Session Epoch 45/150) | Loss: 1.2633 | Train Acc: 55.22% | Test Acc: 54.31% | Time: 0.06s
+Epoch 56 (Session Epoch 46/150) | Loss: 2.6579 | Train Acc: 55.42% | Test Acc: 54.39% | Time: 0.06s
+Epoch 57 (Session Epoch 47/150) | Loss: 1.5655 | Train Acc: 55.41% | Test Acc: 54.69% | Time: 0.06s
+Epoch 58 (Session Epoch 48/150) | Loss: 2.0185 | Train Acc: 55.40% | Test Acc: 54.48% | Time: 0.06s
+Epoch 59 (Session Epoch 49/150) | Loss: 1.9030 | Train Acc: 55.51% | Test Acc: 54.51% | Time: 0.06s
+Epoch 60 (Session Epoch 50/150) | Loss: 3.1880 | Train Acc: 55.26% | Test Acc: 54.73% | Time: 0.06s
+Epoch 61 (Session Epoch 51/150) | Loss: 3.0645 | Train Acc: 55.33% | Test Acc: 54.30% | Time: 0.06s
+Epoch 62 (Session Epoch 52/150) | Loss: 4.6420 | Train Acc: 55.42% | Test Acc: 54.37% | Time: 0.06s
+Epoch 63 (Session Epoch 53/150) | Loss: 2.2221 | Train Acc: 55.54% | Test Acc: 54.72% | Time: 0.06s
+Epoch 64 (Session Epoch 54/150) | Loss: 2.6934 | Train Acc: 55.42% | Test Acc: 54.67% | Time: 0.06s
+Epoch 65 (Session Epoch 55/150) | Loss: 2.3538 | Train Acc: 55.59% | Test Acc: 54.28% | Time: 0.06s
+Epoch 66 (Session Epoch 56/150) | Loss: 0.9932 | Train Acc: 55.37% | Test Acc: 54.53% | Time: 0.06s
+Epoch 67 (Session Epoch 57/150) | Loss: 3.2599 | Train Acc: 55.67% | Test Acc: 54.53% | Time: 0.06s
+Epoch 68 (Session Epoch 58/150) | Loss: 1.6372 | Train Acc: 55.61% | Test Acc: 54.42% | Time: 0.06s
+Epoch 69 (Session Epoch 59/150) | Loss: 0.9869 | Train Acc: 55.62% | Test Acc: 54.28% | Time: 0.06s
+Epoch 70 (Session Epoch 60/150) | Loss: 3.2387 | Train Acc: 55.64% | Test Acc: 54.87% | Time: 0.06s
+Epoch 71 (Session Epoch 61/150) | Loss: 2.0211 | Train Acc: 55.46% | Test Acc: 54.48% | Time: 0.06s
+Epoch 72 (Session Epoch 62/150) | Loss: 1.4253 | Train Acc: 55.69% | Test Acc: 54.51% | Time: 0.06s
+Epoch 73 (Session Epoch 63/150) | Loss: 1.4321 | Train Acc: 55.65% | Test Acc: 54.53% | Time: 0.06s
+Epoch 74 (Session Epoch 64/150) | Loss: 1.6858 | Train Acc: 55.64% | Test Acc: 54.73% | Time: 0.06s
+Epoch 75 (Session Epoch 65/150) | Loss: 1.9816 | Train Acc: 55.67% | Test Acc: 54.79% | Time: 0.06s
+Epoch 76 (Session Epoch 66/150) | Loss: 2.5978 | Train Acc: 55.71% | Test Acc: 54.61% | Time: 0.06s
+Epoch 77 (Session Epoch 67/150) | Loss: 2.0855 | Train Acc: 55.74% | Test Acc: 54.65% | Time: 0.06s
+Epoch 78 (Session Epoch 68/150) | Loss: 7.2210 | Train Acc: 55.60% | Test Acc: 54.65% | Time: 0.06s
+Epoch 79 (Session Epoch 69/150) | Loss: 1.7283 | Train Acc: 55.57% | Test Acc: 54.73% | Time: 0.06s
+Epoch 80 (Session Epoch 70/150) | Loss: 3.4823 | Train Acc: 55.87% | Test Acc: 54.48% | Time: 0.06s
+Epoch 81 (Session Epoch 71/150) | Loss: 1.9217 | Train Acc: 55.92% | Test Acc: 54.61% | Time: 0.06s
+Epoch 82 (Session Epoch 72/150) | Loss: 1.9916 | Train Acc: 55.51% | Test Acc: 54.69% | Time: 0.06s
+Epoch 83 (Session Epoch 73/150) | Loss: 1.6408 | Train Acc: 55.88% | Test Acc: 54.58% | Time: 0.06s
+Epoch 84 (Session Epoch 74/150) | Loss: 2.1796 | Train Acc: 55.72% | Test Acc: 54.75% | Time: 0.06s
+Epoch 85 (Session Epoch 75/150) | Loss: 1.0949 | Train Acc: 55.99% | Test Acc: 54.51% | Time: 0.06s
+Epoch 86 (Session Epoch 76/150) | Loss: 1.1649 | Train Acc: 55.77% | Test Acc: 54.26% | Time: 0.06s
+Epoch 87 (Session Epoch 77/150) | Loss: 2.8860 | Train Acc: 55.94% | Test Acc: 54.59% | Time: 0.06s
+Epoch 88 (Session Epoch 78/150) | Loss: 4.8311 | Train Acc: 55.93% | Test Acc: 54.47% | Time: 0.06s
+Epoch 89 (Session Epoch 79/150) | Loss: 2.9782 | Train Acc: 55.87% | Test Acc: 54.33% | Time: 0.06s
+Epoch 90 (Session Epoch 80/150) | Loss: 1.8953 | Train Acc: 55.94% | Test Acc: 54.53% | Time: 0.06s
+Epoch 91 (Session Epoch 81/150) | Loss: 2.4934 | Train Acc: 55.70% | Test Acc: 54.45% | Time: 0.06s
+Epoch 92 (Session Epoch 82/150) | Loss: 2.1311 | Train Acc: 55.66% | Test Acc: 54.53% | Time: 0.06s
+Epoch 93 (Session Epoch 83/150) | Loss: 2.3651 | Train Acc: 55.88% | Test Acc: 54.56% | Time: 0.06s
+Epoch 94 (Session Epoch 84/150) | Loss: 2.1400 | Train Acc: 55.95% | Test Acc: 54.36% | Time: 0.06s
+Epoch 95 (Session Epoch 85/150) | Loss: 2.1793 | Train Acc: 55.89% | Test Acc: 54.83% | Time: 0.06s
+Epoch 96 (Session Epoch 86/150) | Loss: 3.2197 | Train Acc: 55.78% | Test Acc: 54.79% | Time: 0.06s
+Epoch 97 (Session Epoch 87/150) | Loss: 3.2297 | Train Acc: 55.90% | Test Acc: 54.55% | Time: 0.06s
+Epoch 98 (Session Epoch 88/150) | Loss: 2.2901 | Train Acc: 55.87% | Test Acc: 54.83% | Time: 0.06s
+Epoch 99 (Session Epoch 89/150) | Loss: 1.2057 | Train Acc: 55.87% | Test Acc: 54.87% | Time: 0.06s
+Epoch 100 (Session Epoch 90/150) | Loss: 1.8786 | Train Acc: 55.89% | Test Acc: 54.87% | Time: 0.06s
+Epoch 101 (Session Epoch 91/150) | Loss: 1.8324 | Train Acc: 55.98% | Test Acc: 54.62% | Time: 0.06s
+Epoch 102 (Session Epoch 92/150) | Loss: 1.1185 | Train Acc: 55.93% | Test Acc: 54.73% | Time: 0.06s
+Epoch 103 (Session Epoch 93/150) | Loss: 1.7258 | Train Acc: 56.04% | Test Acc: 54.64% | Time: 0.06s
+Epoch 104 (Session Epoch 94/150) | Loss: 2.4467 | Train Acc: 56.11% | Test Acc: 54.69% | Time: 0.06s
+Epoch 105 (Session Epoch 95/150) | Loss: 1.4890 | Train Acc: 55.90% | Test Acc: 54.59% | Time: 0.06s
+Epoch 106 (Session Epoch 96/150) | Loss: 1.1868 | Train Acc: 56.06% | Test Acc: 54.72% | Time: 0.06s
+Epoch 107 (Session Epoch 97/150) | Loss: 2.1798 | Train Acc: 56.00% | Test Acc: 54.86% | Time: 0.06s
+Epoch 108 (Session Epoch 98/150) | Loss: 3.7369 | Train Acc: 56.16% | Test Acc: 54.50% | Time: 0.06s
+Epoch 109 (Session Epoch 99/150) | Loss: 2.3085 | Train Acc: 56.13% | Test Acc: 54.39% | Time: 0.06s
+Epoch 110 (Session Epoch 100/150) | Loss: 1.1265 | Train Acc: 56.03% | Test Acc: 54.78% | Time: 0.06s
+Epoch 111 (Session Epoch 101/150) | Loss: 2.7296 | Train Acc: 56.01% | Test Acc: 54.45% | Time: 0.06s
+Epoch 112 (Session Epoch 102/150) | Loss: 1.8116 | Train Acc: 56.09% | Test Acc: 54.61% | Time: 0.06s
+Epoch 113 (Session Epoch 103/150) | Loss: 4.8510 | Train Acc: 56.12% | Test Acc: 54.55% | Time: 0.06s
+Epoch 114 (Session Epoch 104/150) | Loss: 2.9723 | Train Acc: 56.15% | Test Acc: 54.45% | Time: 0.06s
+Epoch 115 (Session Epoch 105/150) | Loss: 2.7218 | Train Acc: 56.03% | Test Acc: 54.53% | Time: 0.06s
+Epoch 116 (Session Epoch 106/150) | Loss: 1.1793 | Train Acc: 56.24% | Test Acc: 54.67% | Time: 0.06s
+Epoch 117 (Session Epoch 107/150) | Loss: 2.6878 | Train Acc: 56.11% | Test Acc: 54.61% | Time: 0.06s
+Epoch 118 (Session Epoch 108/150) | Loss: 4.1176 | Train Acc: 56.14% | Test Acc: 54.75% | Time: 0.06s
+Epoch 119 (Session Epoch 109/150) | Loss: 2.3439 | Train Acc: 56.01% | Test Acc: 54.34% | Time: 0.06s
+Epoch 120 (Session Epoch 110/150) | Loss: 2.2233 | Train Acc: 56.02% | Test Acc: 54.98% | Time: 0.06s
+Epoch 121 (Session Epoch 111/150) | Loss: 1.3678 | Train Acc: 56.08% | Test Acc: 54.79% | Time: 0.06s
+Epoch 122 (Session Epoch 112/150) | Loss: 1.9818 | Train Acc: 56.07% | Test Acc: 54.79% | Time: 0.06s
+Epoch 123 (Session Epoch 113/150) | Loss: 1.1998 | Train Acc: 56.16% | Test Acc: 54.67% | Time: 0.06s
+Epoch 124 (Session Epoch 114/150) | Loss: 2.2803 | Train Acc: 56.35% | Test Acc: 54.58% | Time: 0.06s
+Epoch 125 (Session Epoch 115/150) | Loss: 1.7036 | Train Acc: 56.13% | Test Acc: 54.78% | Time: 0.06s
+Epoch 126 (Session Epoch 116/150) | Loss: 2.7778 | Train Acc: 56.32% | Test Acc: 54.73% | Time: 0.06s
+Epoch 127 (Session Epoch 117/150) | Loss: 2.2213 | Train Acc: 56.19% | Test Acc: 54.76% | Time: 0.06s
+Epoch 128 (Session Epoch 118/150) | Loss: 2.5582 | Train Acc: 56.25% | Test Acc: 54.72% | Time: 0.06s
+Epoch 129 (Session Epoch 119/150) | Loss: 2.9587 | Train Acc: 56.29% | Test Acc: 54.70% | Time: 0.06s
+Epoch 130 (Session Epoch 120/150) | Loss: 2.6491 | Train Acc: 56.26% | Test Acc: 54.59% | Time: 0.06s
+Epoch 131 (Session Epoch 121/150) | Loss: 2.7570 | Train Acc: 56.22% | Test Acc: 54.78% | Time: 0.06s
+Epoch 132 (Session Epoch 122/150) | Loss: 3.1997 | Train Acc: 56.27% | Test Acc: 54.65% | Time: 0.06s
+Epoch 133 (Session Epoch 123/150) | Loss: 4.0629 | Train Acc: 56.22% | Test Acc: 54.69% | Time: 0.06s
+Epoch 134 (Session Epoch 124/150) | Loss: 2.6464 | Train Acc: 56.35% | Test Acc: 54.86% | Time: 0.06s
+Epoch 135 (Session Epoch 125/150) | Loss: 1.3265 | Train Acc: 56.39% | Test Acc: 54.76% | Time: 0.06s
+Epoch 136 (Session Epoch 126/150) | Loss: 1.4153 | Train Acc: 56.41% | Test Acc: 54.90% | Time: 0.06s
+Epoch 137 (Session Epoch 127/150) | Loss: 3.4008 | Train Acc: 56.18% | Test Acc: 55.14% | Time: 0.06s
+Epoch 138 (Session Epoch 128/150) | Loss: 1.2636 | Train Acc: 56.32% | Test Acc: 54.61% | Time: 0.06s
+Epoch 139 (Session Epoch 129/150) | Loss: 1.9983 | Train Acc: 56.48% | Test Acc: 54.86% | Time: 0.06s
+Epoch 140 (Session Epoch 130/150) | Loss: 3.7053 | Train Acc: 56.35% | Test Acc: 54.42% | Time: 0.06s
+Epoch 141 (Session Epoch 131/150) | Loss: 2.4790 | Train Acc: 56.29% | Test Acc: 55.11% | Time: 0.06s
+Epoch 142 (Session Epoch 132/150) | Loss: 2.0595 | Train Acc: 56.42% | Test Acc: 54.97% | Time: 0.06s
+Epoch 143 (Session Epoch 133/150) | Loss: 3.1859 | Train Acc: 56.38% | Test Acc: 54.73% | Time: 0.06s
+Epoch 144 (Session Epoch 134/150) | Loss: 2.9248 | Train Acc: 56.57% | Test Acc: 54.61% | Time: 0.06s
+Epoch 145 (Session Epoch 135/150) | Loss: 1.9384 | Train Acc: 56.42% | Test Acc: 54.87% | Time: 0.06s
+Epoch 146 (Session Epoch 136/150) | Loss: 2.2359 | Train Acc: 56.28% | Test Acc: 54.92% | Time: 0.06s
+Epoch 147 (Session Epoch 137/150) | Loss: 2.1480 | Train Acc: 56.42% | Test Acc: 54.86% | Time: 0.06s
+Epoch 148 (Session Epoch 138/150) | Loss: 3.3406 | Train Acc: 56.26% | Test Acc: 54.67% | Time: 0.06s
+Epoch 149 (Session Epoch 139/150) | Loss: 3.3058 | Train Acc: 56.28% | Test Acc: 54.61% | Time: 0.06s
+Epoch 150 (Session Epoch 140/150) | Loss: 1.7329 | Train Acc: 56.40% | Test Acc: 54.53% | Time: 0.06s
+Epoch 151 (Session Epoch 141/150) | Loss: 2.1433 | Train Acc: 56.38% | Test Acc: 55.00% | Time: 0.06s
+Epoch 152 (Session Epoch 142/150) | Loss: 1.5418 | Train Acc: 56.45% | Test Acc: 54.59% | Time: 0.06s
+Epoch 153 (Session Epoch 143/150) | Loss: 4.6317 | Train Acc: 56.39% | Test Acc: 55.14% | Time: 0.06s
+Epoch 154 (Session Epoch 144/150) | Loss: 1.5178 | Train Acc: 56.40% | Test Acc: 54.69% | Time: 0.06s
+Epoch 155 (Session Epoch 145/150) | Loss: 2.7547 | Train Acc: 56.38% | Test Acc: 54.97% | Time: 0.06s
+Epoch 156 (Session Epoch 146/150) | Loss: 2.3651 | Train Acc: 56.44% | Test Acc: 54.61% | Time: 0.06s
+Epoch 157 (Session Epoch 147/150) | Loss: 1.7217 | Train Acc: 56.47% | Test Acc: 54.84% | Time: 0.06s
+Epoch 158 (Session Epoch 148/150) | Loss: 2.1505 | Train Acc: 56.54% | Test Acc: 55.12% | Time: 0.06s
+Epoch 159 (Session Epoch 149/150) | Loss: 2.6222 | Train Acc: 56.58% | Test Acc: 54.76% | Time: 0.06s
+Epoch 160 (Session Epoch 150/150) | Loss: 2.5748 | Train Acc: 56.39% | Test Acc: 54.48% | Time: 0.06s
+==========================================
+SESSION FINISHED AT: 2026-07-09 12:23:14
+Session Duration: 9.39s
+Total Cumulative Epochs: 160
+Final Test Set Accuracy: 54.48%
+==========================================
+
+==========================================
+TRAINING SESSION STARTED AT: 2026-07-09 12:24:50
+Requested Epochs in this Session: 150
+Total Epochs Before Session: 0
+==========================================
+Epoch 1 (Session Epoch 1/150) | Loss: 2.1862 | Train Acc: 52.33% | Test Acc: 51.94% | Time: 0.09s
+Epoch 2 (Session Epoch 2/150) | Loss: 1.9846 | Train Acc: 53.15% | Test Acc: 52.69% | Time: 0.09s
+Epoch 3 (Session Epoch 3/150) | Loss: 2.5975 | Train Acc: 54.01% | Test Acc: 53.31% | Time: 0.09s
+Epoch 4 (Session Epoch 4/150) | Loss: 2.2404 | Train Acc: 54.34% | Test Acc: 53.70% | Time: 0.09s
+Epoch 5 (Session Epoch 5/150) | Loss: 1.0535 | Train Acc: 54.64% | Test Acc: 54.25% | Time: 0.09s
+Epoch 6 (Session Epoch 6/150) | Loss: 1.9906 | Train Acc: 55.03% | Test Acc: 53.98% | Time: 0.09s
+Epoch 7 (Session Epoch 7/150) | Loss: 3.3452 | Train Acc: 55.15% | Test Acc: 54.23% | Time: 0.09s
+Epoch 8 (Session Epoch 8/150) | Loss: 1.4021 | Train Acc: 55.26% | Test Acc: 54.65% | Time: 0.09s
+Epoch 9 (Session Epoch 9/150) | Loss: 3.1703 | Train Acc: 55.30% | Test Acc: 54.30% | Time: 0.09s
+Epoch 10 (Session Epoch 10/150) | Loss: 1.5216 | Train Acc: 55.40% | Test Acc: 54.67% | Time: 0.09s
+Epoch 11 (Session Epoch 11/150) | Loss: 2.8905 | Train Acc: 55.69% | Test Acc: 54.31% | Time: 0.09s
+Epoch 12 (Session Epoch 12/150) | Loss: 3.4450 | Train Acc: 55.57% | Test Acc: 54.86% | Time: 0.09s
+Epoch 13 (Session Epoch 13/150) | Loss: 2.3876 | Train Acc: 56.45% | Test Acc: 55.18% | Time: 0.09s
+Epoch 14 (Session Epoch 14/150) | Loss: 1.1877 | Train Acc: 56.32% | Test Acc: 54.90% | Time: 0.09s
+Epoch 15 (Session Epoch 15/150) | Loss: 2.0636 | Train Acc: 55.97% | Test Acc: 55.11% | Time: 0.09s
+Epoch 16 (Session Epoch 16/150) | Loss: 3.2508 | Train Acc: 56.21% | Test Acc: 54.81% | Time: 0.09s
+Epoch 17 (Session Epoch 17/150) | Loss: 1.2825 | Train Acc: 56.65% | Test Acc: 55.12% | Time: 0.09s
+Epoch 18 (Session Epoch 18/150) | Loss: 1.2855 | Train Acc: 56.67% | Test Acc: 55.12% | Time: 0.09s
+Epoch 19 (Session Epoch 19/150) | Loss: 1.3790 | Train Acc: 56.74% | Test Acc: 55.22% | Time: 0.09s
+Epoch 20 (Session Epoch 20/150) | Loss: 2.2941 | Train Acc: 56.92% | Test Acc: 55.33% | Time: 0.09s
+Epoch 21 (Session Epoch 21/150) | Loss: 2.8802 | Train Acc: 57.15% | Test Acc: 55.39% | Time: 0.10s
+Epoch 22 (Session Epoch 22/150) | Loss: 1.4648 | Train Acc: 56.57% | Test Acc: 55.54% | Time: 0.09s
+Epoch 23 (Session Epoch 23/150) | Loss: 1.3987 | Train Acc: 57.12% | Test Acc: 55.34% | Time: 0.09s
+Epoch 24 (Session Epoch 24/150) | Loss: 2.5321 | Train Acc: 56.82% | Test Acc: 54.97% | Time: 0.09s
+Epoch 25 (Session Epoch 25/150) | Loss: 4.1370 | Train Acc: 57.49% | Test Acc: 55.22% | Time: 0.09s
+Epoch 26 (Session Epoch 26/150) | Loss: 3.0002 | Train Acc: 57.18% | Test Acc: 55.61% | Time: 0.09s
+Epoch 27 (Session Epoch 27/150) | Loss: 3.3812 | Train Acc: 57.22% | Test Acc: 55.28% | Time: 0.09s
+Epoch 28 (Session Epoch 28/150) | Loss: 1.8661 | Train Acc: 57.30% | Test Acc: 55.47% | Time: 0.09s
+Epoch 29 (Session Epoch 29/150) | Loss: 3.1278 | Train Acc: 57.40% | Test Acc: 55.48% | Time: 0.10s
+Epoch 30 (Session Epoch 30/150) | Loss: 3.3446 | Train Acc: 57.72% | Test Acc: 55.33% | Time: 0.10s
+Epoch 31 (Session Epoch 31/150) | Loss: 3.2820 | Train Acc: 57.54% | Test Acc: 55.48% | Time: 0.09s
+Epoch 32 (Session Epoch 32/150) | Loss: 2.0238 | Train Acc: 57.71% | Test Acc: 55.11% | Time: 0.10s
+Epoch 33 (Session Epoch 33/150) | Loss: 1.6489 | Train Acc: 58.27% | Test Acc: 55.33% | Time: 0.10s
+Epoch 34 (Session Epoch 34/150) | Loss: 1.6438 | Train Acc: 58.20% | Test Acc: 55.86% | Time: 0.10s
+Epoch 35 (Session Epoch 35/150) | Loss: 1.8348 | Train Acc: 57.72% | Test Acc: 55.56% | Time: 0.10s
+Epoch 36 (Session Epoch 36/150) | Loss: 5.7241 | Train Acc: 58.38% | Test Acc: 55.59% | Time: 0.10s
+Epoch 37 (Session Epoch 37/150) | Loss: 2.8588 | Train Acc: 58.16% | Test Acc: 55.33% | Time: 0.09s
+Epoch 38 (Session Epoch 38/150) | Loss: 3.3225 | Train Acc: 57.58% | Test Acc: 55.20% | Time: 0.09s
+Epoch 39 (Session Epoch 39/150) | Loss: 2.0944 | Train Acc: 57.88% | Test Acc: 55.53% | Time: 0.09s
+Epoch 40 (Session Epoch 40/150) | Loss: 1.7450 | Train Acc: 58.50% | Test Acc: 56.18% | Time: 0.09s
+Epoch 41 (Session Epoch 41/150) | Loss: 2.8721 | Train Acc: 58.42% | Test Acc: 55.31% | Time: 0.09s
+Epoch 42 (Session Epoch 42/150) | Loss: 1.8983 | Train Acc: 58.30% | Test Acc: 55.84% | Time: 0.09s
+Epoch 43 (Session Epoch 43/150) | Loss: 2.5303 | Train Acc: 58.55% | Test Acc: 55.82% | Time: 0.10s
+Epoch 44 (Session Epoch 44/150) | Loss: 3.4134 | Train Acc: 58.95% | Test Acc: 55.75% | Time: 0.10s
+Epoch 45 (Session Epoch 45/150) | Loss: 1.9110 | Train Acc: 58.52% | Test Acc: 55.62% | Time: 0.10s
+Epoch 46 (Session Epoch 46/150) | Loss: 3.0839 | Train Acc: 58.38% | Test Acc: 55.59% | Time: 0.10s
+Epoch 47 (Session Epoch 47/150) | Loss: 2.1830 | Train Acc: 58.99% | Test Acc: 55.90% | Time: 0.10s
+Epoch 48 (Session Epoch 48/150) | Loss: 4.4291 | Train Acc: 58.87% | Test Acc: 55.75% | Time: 0.10s
+Epoch 49 (Session Epoch 49/150) | Loss: 3.9754 | Train Acc: 59.19% | Test Acc: 55.87% | Time: 0.11s
+Epoch 50 (Session Epoch 50/150) | Loss: 1.9529 | Train Acc: 58.85% | Test Acc: 56.10% | Time: 0.09s
+Epoch 51 (Session Epoch 51/150) | Loss: 1.8616 | Train Acc: 59.02% | Test Acc: 55.82% | Time: 0.09s
+Epoch 52 (Session Epoch 52/150) | Loss: 1.8868 | Train Acc: 59.23% | Test Acc: 56.14% | Time: 0.09s
+Epoch 53 (Session Epoch 53/150) | Loss: 2.9058 | Train Acc: 58.94% | Test Acc: 55.68% | Time: 0.09s
+Epoch 54 (Session Epoch 54/150) | Loss: 4.9157 | Train Acc: 59.05% | Test Acc: 55.73% | Time: 0.09s
+Epoch 55 (Session Epoch 55/150) | Loss: 2.2585 | Train Acc: 59.13% | Test Acc: 55.86% | Time: 0.11s
+Epoch 56 (Session Epoch 56/150) | Loss: 3.3449 | Train Acc: 58.80% | Test Acc: 55.70% | Time: 0.09s
+Epoch 57 (Session Epoch 57/150) | Loss: 2.4018 | Train Acc: 59.00% | Test Acc: 55.95% | Time: 0.09s
+Epoch 58 (Session Epoch 58/150) | Loss: 2.6913 | Train Acc: 59.16% | Test Acc: 55.67% | Time: 0.10s
+Epoch 59 (Session Epoch 59/150) | Loss: 2.8346 | Train Acc: 59.49% | Test Acc: 56.01% | Time: 0.10s
+Epoch 60 (Session Epoch 60/150) | Loss: 3.1934 | Train Acc: 59.69% | Test Acc: 56.04% | Time: 0.10s
+Epoch 61 (Session Epoch 61/150) | Loss: 3.9781 | Train Acc: 59.70% | Test Acc: 56.00% | Time: 0.10s
+Epoch 62 (Session Epoch 62/150) | Loss: 4.9335 | Train Acc: 59.40% | Test Acc: 55.82% | Time: 0.10s
+Epoch 63 (Session Epoch 63/150) | Loss: 3.2567 | Train Acc: 59.54% | Test Acc: 55.92% | Time: 0.09s
+Epoch 64 (Session Epoch 64/150) | Loss: 3.9262 | Train Acc: 59.84% | Test Acc: 56.20% | Time: 0.09s
+Epoch 65 (Session Epoch 65/150) | Loss: 3.6574 | Train Acc: 59.13% | Test Acc: 55.50% | Time: 0.09s
+Epoch 66 (Session Epoch 66/150) | Loss: 2.1294 | Train Acc: 59.79% | Test Acc: 56.18% | Time: 0.09s
+Epoch 67 (Session Epoch 67/150) | Loss: 3.8452 | Train Acc: 59.51% | Test Acc: 56.03% | Time: 0.09s
+Epoch 68 (Session Epoch 68/150) | Loss: 2.7124 | Train Acc: 59.43% | Test Acc: 55.34% | Time: 0.09s
+Epoch 69 (Session Epoch 69/150) | Loss: 2.2165 | Train Acc: 59.81% | Test Acc: 56.31% | Time: 0.09s
+Epoch 70 (Session Epoch 70/150) | Loss: 4.2620 | Train Acc: 59.44% | Test Acc: 55.57% | Time: 0.09s
+Epoch 71 (Session Epoch 71/150) | Loss: 2.6159 | Train Acc: 59.81% | Test Acc: 56.15% | Time: 0.10s
+Epoch 72 (Session Epoch 72/150) | Loss: 2.5252 | Train Acc: 59.64% | Test Acc: 56.15% | Time: 0.10s
+Epoch 73 (Session Epoch 73/150) | Loss: 2.7067 | Train Acc: 59.95% | Test Acc: 56.25% | Time: 0.10s
+Epoch 74 (Session Epoch 74/150) | Loss: 2.9775 | Train Acc: 59.97% | Test Acc: 56.26% | Time: 0.10s
+Epoch 75 (Session Epoch 75/150) | Loss: 2.9024 | Train Acc: 59.42% | Test Acc: 56.00% | Time: 0.10s
+Epoch 76 (Session Epoch 76/150) | Loss: 3.3033 | Train Acc: 59.96% | Test Acc: 56.25% | Time: 0.10s
+Epoch 77 (Session Epoch 77/150) | Loss: 2.8669 | Train Acc: 59.93% | Test Acc: 55.93% | Time: 0.10s
+Epoch 78 (Session Epoch 78/150) | Loss: 7.9942 | Train Acc: 59.88% | Test Acc: 55.79% | Time: 0.09s
+Epoch 79 (Session Epoch 79/150) | Loss: 2.6671 | Train Acc: 60.40% | Test Acc: 55.79% | Time: 0.09s
+Epoch 80 (Session Epoch 80/150) | Loss: 3.8892 | Train Acc: 60.59% | Test Acc: 56.25% | Time: 0.09s
+Epoch 81 (Session Epoch 81/150) | Loss: 3.3760 | Train Acc: 60.54% | Test Acc: 56.20% | Time: 0.10s
+Epoch 82 (Session Epoch 82/150) | Loss: 3.4649 | Train Acc: 60.43% | Test Acc: 56.29% | Time: 0.10s
+Epoch 83 (Session Epoch 83/150) | Loss: 2.9276 | Train Acc: 60.61% | Test Acc: 56.25% | Time: 0.09s
+Epoch 84 (Session Epoch 84/150) | Loss: 4.0274 | Train Acc: 59.79% | Test Acc: 55.87% | Time: 0.09s
+Epoch 85 (Session Epoch 85/150) | Loss: 2.4859 | Train Acc: 60.97% | Test Acc: 56.76% | Time: 0.09s
+Epoch 86 (Session Epoch 86/150) | Loss: 2.4155 | Train Acc: 60.84% | Test Acc: 56.15% | Time: 0.09s
+Epoch 87 (Session Epoch 87/150) | Loss: 3.8081 | Train Acc: 60.55% | Test Acc: 56.21% | Time: 0.09s
+Epoch 88 (Session Epoch 88/150) | Loss: 7.0444 | Train Acc: 59.87% | Test Acc: 56.26% | Time: 0.10s
+Epoch 89 (Session Epoch 89/150) | Loss: 4.4233 | Train Acc: 60.57% | Test Acc: 55.93% | Time: 0.10s
+Epoch 90 (Session Epoch 90/150) | Loss: 3.1467 | Train Acc: 61.04% | Test Acc: 56.40% | Time: 0.10s
+Epoch 91 (Session Epoch 91/150) | Loss: 3.7251 | Train Acc: 59.95% | Test Acc: 56.00% | Time: 0.09s
+Epoch 92 (Session Epoch 92/150) | Loss: 3.8065 | Train Acc: 60.03% | Test Acc: 55.87% | Time: 0.09s
+Epoch 93 (Session Epoch 93/150) | Loss: 3.6881 | Train Acc: 61.00% | Test Acc: 56.32% | Time: 0.10s
+Epoch 94 (Session Epoch 94/150) | Loss: 3.1464 | Train Acc: 61.22% | Test Acc: 56.62% | Time: 0.10s
+Epoch 95 (Session Epoch 95/150) | Loss: 3.1466 | Train Acc: 60.89% | Test Acc: 56.17% | Time: 0.10s
+Epoch 96 (Session Epoch 96/150) | Loss: 4.6197 | Train Acc: 61.22% | Test Acc: 55.92% | Time: 0.10s
+Epoch 97 (Session Epoch 97/150) | Loss: 4.8378 | Train Acc: 60.87% | Test Acc: 55.87% | Time: 0.09s
+Epoch 98 (Session Epoch 98/150) | Loss: 3.9856 | Train Acc: 61.21% | Test Acc: 56.37% | Time: 0.09s
+Epoch 99 (Session Epoch 99/150) | Loss: 2.6592 | Train Acc: 61.52% | Test Acc: 56.74% | Time: 0.09s
+Epoch 100 (Session Epoch 100/150) | Loss: 4.0486 | Train Acc: 61.00% | Test Acc: 56.18% | Time: 0.10s
+Epoch 101 (Session Epoch 101/150) | Loss: 2.8752 | Train Acc: 61.09% | Test Acc: 56.15% | Time: 0.10s
+Epoch 102 (Session Epoch 102/150) | Loss: 2.6506 | Train Acc: 61.18% | Test Acc: 56.65% | Time: 0.10s
+Epoch 103 (Session Epoch 103/150) | Loss: 2.6692 | Train Acc: 61.16% | Test Acc: 56.57% | Time: 0.09s
+Epoch 104 (Session Epoch 104/150) | Loss: 4.6795 | Train Acc: 61.61% | Test Acc: 55.93% | Time: 0.09s
+Epoch 105 (Session Epoch 105/150) | Loss: 2.7497 | Train Acc: 61.01% | Test Acc: 56.45% | Time: 0.09s
+Epoch 106 (Session Epoch 106/150) | Loss: 2.7687 | Train Acc: 61.10% | Test Acc: 55.65% | Time: 0.09s
+Epoch 107 (Session Epoch 107/150) | Loss: 3.5949 | Train Acc: 61.48% | Test Acc: 56.45% | Time: 0.10s
+Epoch 108 (Session Epoch 108/150) | Loss: 5.3425 | Train Acc: 61.43% | Test Acc: 56.01% | Time: 0.10s
+Epoch 109 (Session Epoch 109/150) | Loss: 4.3507 | Train Acc: 61.50% | Test Acc: 56.45% | Time: 0.10s
+Epoch 110 (Session Epoch 110/150) | Loss: 2.7537 | Train Acc: 61.66% | Test Acc: 56.42% | Time: 0.10s
+Epoch 111 (Session Epoch 111/150) | Loss: 4.1234 | Train Acc: 61.24% | Test Acc: 56.18% | Time: 0.10s
+Epoch 112 (Session Epoch 112/150) | Loss: 3.1293 | Train Acc: 61.63% | Test Acc: 56.10% | Time: 0.10s
+Epoch 113 (Session Epoch 113/150) | Loss: 5.4360 | Train Acc: 61.90% | Test Acc: 56.14% | Time: 0.09s
+Epoch 114 (Session Epoch 114/150) | Loss: 4.4427 | Train Acc: 61.48% | Test Acc: 56.21% | Time: 0.09s
+Epoch 115 (Session Epoch 115/150) | Loss: 3.6189 | Train Acc: 61.51% | Test Acc: 55.73% | Time: 0.09s
+Epoch 116 (Session Epoch 116/150) | Loss: 2.8428 | Train Acc: 61.66% | Test Acc: 55.59% | Time: 0.09s
+Epoch 117 (Session Epoch 117/150) | Loss: 4.3528 | Train Acc: 61.36% | Test Acc: 55.61% | Time: 0.09s
+Epoch 118 (Session Epoch 118/150) | Loss: 6.1730 | Train Acc: 61.97% | Test Acc: 56.09% | Time: 0.09s
+Epoch 119 (Session Epoch 119/150) | Loss: 3.1250 | Train Acc: 61.92% | Test Acc: 56.49% | Time: 0.09s
+Epoch 120 (Session Epoch 120/150) | Loss: 3.8604 | Train Acc: 61.94% | Test Acc: 56.48% | Time: 0.10s
+Epoch 121 (Session Epoch 121/150) | Loss: 3.2581 | Train Acc: 62.09% | Test Acc: 56.21% | Time: 0.10s
+Epoch 122 (Session Epoch 122/150) | Loss: 3.9012 | Train Acc: 62.09% | Test Acc: 56.67% | Time: 0.10s
+Epoch 123 (Session Epoch 123/150) | Loss: 3.1219 | Train Acc: 61.48% | Test Acc: 56.23% | Time: 0.10s
+Epoch 124 (Session Epoch 124/150) | Loss: 3.8866 | Train Acc: 61.51% | Test Acc: 56.53% | Time: 0.10s
+Epoch 125 (Session Epoch 125/150) | Loss: 3.4236 | Train Acc: 61.99% | Test Acc: 56.51% | Time: 0.10s
+Epoch 126 (Session Epoch 126/150) | Loss: 4.1049 | Train Acc: 62.04% | Test Acc: 56.20% | Time: 0.10s
+Epoch 127 (Session Epoch 127/150) | Loss: 3.2784 | Train Acc: 61.99% | Test Acc: 56.60% | Time: 0.09s
+Epoch 128 (Session Epoch 128/150) | Loss: 4.4204 | Train Acc: 62.48% | Test Acc: 55.93% | Time: 0.09s
+Epoch 129 (Session Epoch 129/150) | Loss: 5.3797 | Train Acc: 61.57% | Test Acc: 54.98% | Time: 0.09s
+Epoch 130 (Session Epoch 130/150) | Loss: 4.1913 | Train Acc: 62.33% | Test Acc: 56.85% | Time: 0.10s
+Epoch 131 (Session Epoch 131/150) | Loss: 4.4233 | Train Acc: 62.37% | Test Acc: 55.84% | Time: 0.10s
+Epoch 132 (Session Epoch 132/150) | Loss: 4.6396 | Train Acc: 62.08% | Test Acc: 56.20% | Time: 0.10s
+Epoch 133 (Session Epoch 133/150) | Loss: 6.0242 | Train Acc: 61.88% | Test Acc: 56.20% | Time: 0.09s
+Epoch 134 (Session Epoch 134/150) | Loss: 4.6528 | Train Acc: 61.38% | Test Acc: 55.12% | Time: 0.09s
+Epoch 135 (Session Epoch 135/150) | Loss: 3.1724 | Train Acc: 62.32% | Test Acc: 56.56% | Time: 0.09s
+Epoch 136 (Session Epoch 136/150) | Loss: 3.6742 | Train Acc: 62.25% | Test Acc: 56.21% | Time: 0.09s
+Epoch 137 (Session Epoch 137/150) | Loss: 5.0389 | Train Acc: 62.36% | Test Acc: 55.81% | Time: 0.10s
+Epoch 138 (Session Epoch 138/150) | Loss: 3.1861 | Train Acc: 61.89% | Test Acc: 56.57% | Time: 0.10s
+Epoch 139 (Session Epoch 139/150) | Loss: 3.8279 | Train Acc: 62.82% | Test Acc: 56.43% | Time: 0.10s
+Epoch 140 (Session Epoch 140/150) | Loss: 5.3474 | Train Acc: 62.09% | Test Acc: 56.21% | Time: 0.10s
+Epoch 141 (Session Epoch 141/150) | Loss: 4.0846 | Train Acc: 62.85% | Test Acc: 55.82% | Time: 0.10s
+Epoch 142 (Session Epoch 142/150) | Loss: 4.5736 | Train Acc: 62.94% | Test Acc: 56.68% | Time: 0.10s
+Epoch 143 (Session Epoch 143/150) | Loss: 5.5867 | Train Acc: 62.47% | Test Acc: 55.92% | Time: 0.09s
+Epoch 144 (Session Epoch 144/150) | Loss: 5.5384 | Train Acc: 62.94% | Test Acc: 55.96% | Time: 0.09s
+Epoch 145 (Session Epoch 145/150) | Loss: 4.2547 | Train Acc: 62.79% | Test Acc: 56.65% | Time: 0.09s
+Epoch 146 (Session Epoch 146/150) | Loss: 3.7678 | Train Acc: 62.92% | Test Acc: 56.26% | Time: 0.09s
+Epoch 147 (Session Epoch 147/150) | Loss: 3.9495 | Train Acc: 63.01% | Test Acc: 56.45% | Time: 0.09s
+Epoch 148 (Session Epoch 148/150) | Loss: 4.8404 | Train Acc: 63.06% | Test Acc: 56.01% | Time: 0.09s
+Epoch 149 (Session Epoch 149/150) | Loss: 4.7114 | Train Acc: 63.01% | Test Acc: 56.49% | Time: 0.09s
+Epoch 150 (Session Epoch 150/150) | Loss: 4.1781 | Train Acc: 62.52% | Test Acc: 56.26% | Time: 0.10s
+==========================================
+SESSION FINISHED AT: 2026-07-09 12:25:05
+Session Duration: 15.82s
+Total Cumulative Epochs: 150
+Final Test Set Accuracy: 56.26%
+==========================================
