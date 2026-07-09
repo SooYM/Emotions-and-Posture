@@ -23,5 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
-# Large Model weights (exceeds GitHub's 100MB file size limit)
+# Dataset files
+Dataset/
+public/Dataset/
+dataset_features.npz
+
+# Large model weights (exceeds GitHub's 100MB limit)
 *.onnx
+*.task
