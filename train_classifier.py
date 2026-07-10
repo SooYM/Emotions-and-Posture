@@ -8,9 +8,19 @@ import time
 import argparse
 import warnings
 from datetime import datetime
-import mediapipe as mp
-from mediapipe.tasks import python
-from mediapipe.tasks.python import vision
+import sys
+# Suppress stderr during mediapipe and protobuf imports to prevent noisy "GetPrototype" warnings
+_original_stderr = sys.stderr
+sys.stderr = open(os.devnull, 'w')
+try:
+    import mediapipe as mp
+    from mediapipe.tasks import python
+    from mediapipe.tasks.python import vision
+except Exception:
+    sys.stderr = _original_stderr
+    raise
+finally:
+    sys.stderr = _original_stderr
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
