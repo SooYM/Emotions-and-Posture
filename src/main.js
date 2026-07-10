@@ -188,36 +188,37 @@ async function initializeApp() {
       addLog(statusMsg, "system");
     });
 
-    // Load pre-trained machine learning weights if available
-    await loadModelWeights();
+    // Start background parallel loading of MLP, CNN and ViT models
+    // This allows the app overlay to clear and the webcam to stream instantly
+    loadModelWeights((modelType) => {
+      if (modelType === "mlp") {
+        addLog("🧠 Custom Neural Net (MLP) weights loaded.", "success");
+      } else if (modelType === "cnn") {
+        addLog("🌀 Custom CNN (FERNet) model loaded successfully.", "success");
+      } else if (modelType === "vit") {
+        addLog("🤖 Hugging Face ViT model loaded successfully.", "success");
+      }
+      
+      // Dynamically update UI active labels as models become available
+      let currentActive = dom.selectModelEngine.value;
+      if (currentActive === "auto") {
+        currentActive = vitPipeline ? "vit" : (cnnSession ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
+      }
+      updateActiveModelLabel(currentActive);
+    }).then(() => {
+      dom.modelStatusText.innerText = "Models Loaded: MediaPipe, Custom MLP, Custom CNN, and Hugging Face ViT";
+      
+      if (modelLoadErrors.mlp) {
+        addLog(`MLP model failed to load: ${modelLoadErrors.mlp}`, "warning");
+      }
+      if (modelLoadErrors.vitCPU) {
+        addLog(`ViT model failed to load: ${modelLoadErrors.vitCPU}`, "error");
+      }
+      if (modelLoadErrors.cnnCPU) {
+        addLog(`CNN model failed to load: ${modelLoadErrors.cnnCPU}`, "error");
+      }
+    });
 
-    // Update model status text with accurate loaded models info
-    dom.modelStatusText.innerText = "Models Loaded: MediaPipe, Custom MLP, Custom CNN, and Hugging Face ViT";
-    
-    // Set initial active model indicator
-    let initialActive = dom.selectModelEngine.value;
-    if (initialActive === "auto") {
-      initialActive = vitPipeline ? "vit" : (cnnSession ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
-    }
-    updateActiveModelLabel(initialActive);
-
-    // Log load warnings/errors directly to the visual event feed for easy diagnostics
-    if (modelLoadErrors.mlp) {
-      addLog(`MLP model failed to load: ${modelLoadErrors.mlp}`, "warning");
-    }
-    if (modelLoadErrors.vitWebGPU) {
-      addLog(`ViT WebGPU backend fail: ${modelLoadErrors.vitWebGPU}`, "warning");
-    }
-    if (modelLoadErrors.vitCPU) {
-      addLog(`ViT CPU backend fail: ${modelLoadErrors.vitCPU}`, "error");
-    }
-    if (modelLoadErrors.cnnWebGPU) {
-      addLog(`CNN WebGPU backend fail: ${modelLoadErrors.cnnWebGPU}`, "warning");
-    }
-    if (modelLoadErrors.cnnCPU) {
-      addLog(`CNN CPU backend fail: ${modelLoadErrors.cnnCPU}`, "error");
-    }
-    
     clearInterval(progressInterval);
     dom.loadingBar.style.width = "100%";
     

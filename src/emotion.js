@@ -91,13 +91,14 @@ async function checkWebGPUSupport() {
   ]);
 }
 
-export async function loadModelWeights() {
+export async function loadModelWeights(onModelLoaded = null) {
   const mlpPromise = (async () => {
     try {
       const response = await fetch("/model_weights.json");
       if (response.ok) {
         modelWeights = await response.json();
         console.log("Successfully loaded machine-learned emotion classification weights.", modelWeights);
+        if (onModelLoaded) onModelLoaded("mlp");
       } else {
         modelLoadErrors.mlp = `Weights file status: ${response.status} ${response.statusText}`;
         console.warn("Pre-trained model weights JSON not found. Defaulting to rule-based heuristics.");
@@ -119,6 +120,7 @@ export async function loadModelWeights() {
           quantized: false  // Do not search for quantized versions, load model.onnx directly
         });
         console.log("Pre-trained Hugging Face ViT model loaded successfully with WebGPU.");
+        if (onModelLoaded) onModelLoaded("vit");
       } else {
         throw new Error("WebGPU is not supported or device creation timed out.");
       }
@@ -131,6 +133,7 @@ export async function loadModelWeights() {
           quantized: false
         });
         console.log("Pre-trained Hugging Face ViT model loaded successfully on CPU.");
+        if (onModelLoaded) onModelLoaded("vit");
       } catch (cpuErr) {
         modelLoadErrors.vitCPU = cpuErr.message;
         console.error("Failed to load ViT model. Emotion classification will fall back to MLP/Heuristics.", cpuErr);
@@ -145,6 +148,7 @@ export async function loadModelWeights() {
         executionProviders: ['wasm']
       });
       console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully on WASM.");
+      if (onModelLoaded) onModelLoaded("cnn");
     } catch (err) {
       modelLoadErrors.cnnCPU = err.message;
       console.error("Failed to load CNN model on WASM:", err);
