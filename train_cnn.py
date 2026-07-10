@@ -162,9 +162,11 @@ def main():
         print(f"Error: Dataset directory '{dataset_dir}' not found. Please verify the symlink.")
         return
 
-    # Transformations matching the notebook
+    # Transformations matching the notebook (with Data Augmentations to prevent overfitting)
     train_transform = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomRotation(15),
         transforms.ToTensor(),
         transforms.Normalize((0.5,), (0.5,))
     ])
