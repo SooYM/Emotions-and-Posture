@@ -243,12 +243,9 @@ def main():
               f"Train Loss: {epoch_train_loss:.4f}, Train Acc: {epoch_train_acc:.2f}% | "
               f"Test Loss: {epoch_test_loss:.4f}, Test Acc: {epoch_test_acc:.2f}%")
 
-    # Save model weights checkpoint
-    torch.save(model.state_dict(), model_path)
-    print(f"Model saved successfully to {model_path}.")
-
-    # Export to ONNX for Web deployment
-    export_onnx(model_path, onnx_dir)
+        # Save checkpoint and export to ONNX at the end of every epoch for live updates in the browser
+        torch.save(model.state_dict(), model_path)
+        export_onnx(model_path, onnx_dir)
 
 if __name__ == "__main__":
     main()
