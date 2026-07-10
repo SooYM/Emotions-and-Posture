@@ -1,4 +1,5 @@
 import { pipeline, env, RawImage } from '@huggingface/transformers';
+import { InferenceSession, Tensor } from 'onnxruntime-web';
 
 export const EMOTIONS = {
   HAPPY: "happy",
@@ -22,7 +23,7 @@ export const EMOTION_METADATA = {
 
 export let modelWeights = null;
 export let vitPipeline = null;
-export let cnnPipeline = null;
+export let cnnSession = null;
 export let modelLoadErrors = {
   vitWebGPU: null,
   vitCPU: null,
@@ -108,21 +109,19 @@ export async function loadModelWeights() {
 
   // 3. Load Custom PyTorch CNN (FERNet) model
   try {
-    console.log("Initializing Custom PyTorch CNN (FERNet)...");
-    cnnPipeline = await pipeline('image-classification', 'cnn_onnx', {
-      device: 'webgpu', // Use WebGPU for fast client-side inference
-      quantized: false
+    console.log("Initializing Custom PyTorch CNN (FERNet) via ONNX Runtime...");
+    cnnSession = await InferenceSession.create(window.location.origin + '/cnn_onnx/model.onnx', {
+      executionProviders: ['webgpu', 'wasm']
     });
-    console.log("Custom PyTorch CNN (FERNet) model loaded successfully with WebGPU.");
+    console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully.");
   } catch (err) {
     modelLoadErrors.cnnWebGPU = err.message;
-    console.warn("Failed to load CNN on WebGPU. Retrying on CPU...", err);
+    console.warn("Failed to load CNN on WebGPU. Retrying with wasm provider...", err);
     try {
-      cnnPipeline = await pipeline('image-classification', 'cnn_onnx', {
-        device: 'wasm', // Fallback to WebAssembly CPU
-        quantized: false
+      cnnSession = await InferenceSession.create(window.location.origin + '/cnn_onnx/model.onnx', {
+        executionProviders: ['wasm']
       });
-      console.log("Custom PyTorch CNN (FERNet) model loaded successfully on CPU.");
+      console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully on CPU.");
     } catch (cpuErr) {
       modelLoadErrors.cnnCPU = cpuErr.message;
       console.error("Failed to load CNN model.", cpuErr);
@@ -166,40 +165,87 @@ export async function classifyEmotionViT(canvasOrImage) {
   };
 }
 
+function preprocessCanvasTo48x48Grayscale(canvasOrImage) {
+  const tempCanvas = document.createElement("canvas");
+  tempCanvas.width = 48;
+  tempCanvas.height = 48;
+  const tempCtx = tempCanvas.getContext("2d");
+  
+  tempCtx.drawImage(canvasOrImage, 0, 0, 48, 48);
+  
+  const imgData = tempCtx.getImageData(0, 0, 48, 48);
+  const data = imgData.data;
+  
+  const float32Array = new Float32Array(48 * 48);
+  
+  for (let i = 0; i < 48 * 48; i++) {
+    const r = data[i * 4];
+    const g = data[i * 4 + 1];
+    const b = data[i * 4 + 2];
+    
+    // Grayscale conversion: Y = 0.299R + 0.587G + 0.114B
+    const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+    
+    // Normalization matching transforms.Normalize((0.5,), (0.5,)) -> (gray - 127.5) / 127.5
+    float32Array[i] = (gray - 127.5) / 127.5;
+  }
+  
+  return float32Array;
+}
+
 export async function classifyEmotionCNN(canvasOrImage) {
-  if (!cnnPipeline) {
+  if (!cnnSession) {
     return null;
   }
-  let input = canvasOrImage;
-  if (canvasOrImage instanceof HTMLCanvasElement) {
-    input = RawImage.fromCanvas(canvasOrImage);
-  }
-  const output = await cnnPipeline(input);
-  const scores = {};
-  for (const e of Object.values(EMOTIONS)) {
-    scores[e] = 0;
-  }
-  
-  let dominantEmotion = EMOTIONS.NEUTRAL;
-  let maxScore = -1;
-  
-  for (const item of output) {
-    const internalKey = HF_TO_INTERNAL[item.label.toLowerCase()];
-    if (internalKey) {
-      scores[internalKey] = item.score;
-      if (item.score > maxScore) {
-        maxScore = item.score;
-        dominantEmotion = internalKey;
+  try {
+    const float32Data = preprocessCanvasTo48x48Grayscale(canvasOrImage);
+    const inputTensor = new Tensor('float32', float32Data, [1, 1, 48, 48]);
+    
+    const outputMap = await cnnSession.run({ [cnnSession.inputNames[0]]: inputTensor });
+    const outputTensor = outputMap[cnnSession.outputNames[0]];
+    const logits = outputTensor.data;
+    
+    // Apply Softmax activation
+    const maxLogit = Math.max(...logits);
+    const exps = Array.from(logits).map(x => Math.exp(x - maxLogit));
+    const sumExps = exps.reduce((sum, val) => sum + val, 0);
+    const probabilities = exps.map(x => sumExps > 0 ? (x / sumExps) : 0);
+    
+    // Match alphabetical PyTorch Class Indices:
+    // {'angry': 0, 'disgust': 1, 'fear': 2, 'happy': 3, 'neutral': 4, 'sad': 5, 'surprise': 6}
+    const EMOTION_ORDER = [
+      EMOTIONS.ANGRY,
+      EMOTIONS.DISGUST,
+      EMOTIONS.ANXIETY, // fear -> anxiety
+      EMOTIONS.HAPPY,
+      EMOTIONS.NEUTRAL,
+      EMOTIONS.SAD,
+      EMOTIONS.SURPRISED // surprise -> surprised
+    ];
+    
+    const scores = {};
+    let dominantEmotion = EMOTIONS.NEUTRAL;
+    let maxScore = -1;
+    
+    for (let i = 0; i < EMOTION_ORDER.length; i++) {
+      const emotion = EMOTION_ORDER[i];
+      scores[emotion] = probabilities[i];
+      if (probabilities[i] > maxScore) {
+        maxScore = probabilities[i];
+        dominantEmotion = emotion;
       }
     }
+    
+    return {
+      dominantEmotion,
+      confidence: maxScore,
+      scores,
+      activeModel: "cnn"
+    };
+  } catch (err) {
+    console.error("CNN inference failure:", err);
+    return null;
   }
-  
-  return {
-    dominantEmotion,
-    confidence: maxScore,
-    scores,
-    activeModel: "cnn"
-  };
 }
 
 export let selectedModelEngine = "auto";

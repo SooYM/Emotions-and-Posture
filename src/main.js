@@ -1,5 +1,5 @@
 import { detectorInstance } from "./detector.js";
-import { classifyEmotion, EMOTION_METADATA, EMOTIONS, loadModelWeights, classifyEmotionViT, classifyEmotionCNN, selectedModelEngine, setSelectedModelEngine, vitPipeline, cnnPipeline, modelWeights, modelLoadErrors } from "./emotion.js";
+import { classifyEmotion, EMOTION_METADATA, EMOTIONS, loadModelWeights, classifyEmotionViT, classifyEmotionCNN, selectedModelEngine, setSelectedModelEngine, vitPipeline, cnnSession, modelWeights, modelLoadErrors } from "./emotion.js";
 import { classifyPosture, POSTURE_METADATA, POSTURES } from "./posture.js";
 import { Visualizer } from "./visualizer.js";
 
@@ -197,7 +197,7 @@ async function initializeApp() {
     // Set initial active model indicator
     let initialActive = dom.selectModelEngine.value;
     if (initialActive === "auto") {
-      initialActive = vitPipeline ? "vit" : (cnnPipeline ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
+      initialActive = vitPipeline ? "vit" : (cnnSession ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
     }
     updateActiveModelLabel(initialActive);
 
@@ -573,8 +573,8 @@ function updateAnalysisResults(results, sourceElement = null) {
   }
 
   // 1. Trigger background async (ViT or CNN) emotion classification if camera frame or uploaded image is active
-  const isVitActive = (selectedModelEngine === "vit" || (selectedModelEngine === "auto" && vitPipeline && !cnnPipeline)) && vitPipeline;
-  const isCnnActive = (selectedModelEngine === "cnn" || (selectedModelEngine === "auto" && cnnPipeline)) && cnnPipeline;
+  const isVitActive = (selectedModelEngine === "vit" || (selectedModelEngine === "auto" && vitPipeline && !cnnSession)) && vitPipeline;
+  const isCnnActive = (selectedModelEngine === "cnn" || (selectedModelEngine === "auto" && cnnSession)) && cnnSession;
   const isAsyncActive = isVitActive || isCnnActive;
 
   if (isAsyncActive && sourceElement && faceResult && faceResult.faceLandmarks && faceResult.faceLandmarks.length > 0) {
@@ -1082,7 +1082,7 @@ async function processNextValidationImage() {
     
     let targetEngine = selectedModelEngine;
     if (targetEngine === "auto") {
-      targetEngine = vitPipeline ? "vit" : (cnnPipeline ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
+      targetEngine = vitPipeline ? "vit" : (cnnSession ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
     }
     
     let emotionRes = null;
@@ -1099,7 +1099,7 @@ async function processNextValidationImage() {
         console.error("Validation ViT inference error:", err);
         addLog(`ViT run fail on ${item.name}: ${err.message}`, "error");
       }
-    } else if (targetEngine === "cnn" && typeof classifyEmotionCNN === "function" && cnnPipeline) {
+    } else if (targetEngine === "cnn" && typeof classifyEmotionCNN === "function" && cnnSession) {
       try {
         emotionRes = await classifyEmotionCNN(offscreenCanvas);
         if (emotionRes) {
@@ -1387,10 +1387,10 @@ function setupEventListeners() {
     } else {
       let active = engineValue;
       if (active === "auto") {
-        active = vitPipeline ? "vit" : (cnnPipeline ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
+        active = vitPipeline ? "vit" : (cnnSession ? "cnn" : (modelWeights ? "mlp" : "heuristics"));
       }
       if (active === "vit" && !vitPipeline) active = "heuristics";
-      if (active === "cnn" && !cnnPipeline) active = "heuristics";
+      if (active === "cnn" && !cnnSession) active = "heuristics";
       if (active === "mlp" && !modelWeights) active = "heuristics";
       updateActiveModelLabel(active);
     }
