@@ -179,8 +179,8 @@ def main():
     train_dataset = datasets.ImageFolder(os.path.join(dataset_dir, "train"), transform=train_transform)
     test_dataset = datasets.ImageFolder(os.path.join(dataset_dir, "test"), transform=test_transform)
 
-    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
-    test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=2, pin_memory=True)
+    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=0, pin_memory=True)
+    test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=0, pin_memory=True)
 
     print(f"Total training images: {len(train_dataset)} | Classes: {train_dataset.class_to_idx}")
     print(f"Total testing images: {len(test_dataset)}")
@@ -203,8 +203,9 @@ def main():
         running_loss = 0.0
         correct = 0
         total = 0
+        total_batches = len(train_loader)
         
-        for images, labels in train_loader:
+        for batch_idx, (images, labels) in enumerate(train_loader):
             images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad()
             outputs = model(images)
@@ -217,6 +218,10 @@ def main():
             total += labels.size(0)
             correct += predicted.eq(labels).sum().item()
             
+            if (batch_idx + 1) % 10 == 0 or (batch_idx + 1) == total_batches:
+                print(f"\rEpoch [{epoch}/{start_epoch + args.epochs}] | Batch {batch_idx + 1}/{total_batches} | Loss: {loss.item():.4f}", end="", flush=True)
+                
+        print() # Move to new line after training batches finish
         epoch_train_loss = running_loss / len(train_loader.dataset)
         epoch_train_acc = 100. * correct / total
 
