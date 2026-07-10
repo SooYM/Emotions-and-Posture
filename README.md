@@ -8,6 +8,7 @@ A high-performance, **100% client-side** web application that performs real-time
 
 *   **⚡ Multiple Inference Engines**:
     *   **🤖 Hugging Face ViT (Vision Transformer)**: Runs `mo-thecreator/vit-Facial-Expression-Recognition` locally in-browser using `@huggingface/transformers` (with support for WebGPU acceleration and WASM fallbacks).
+    *   **🌀 Custom CNN (FERNet)**: Replicated from the custom PyTorch model training setup to perform client-side CNN inference in the browser.
     *   **🧠 Custom MLP Classifier**: Pure JavaScript implementation of a Multi-Layer Perceptron (MLP) neural network running on 52 face blendshape coordinates.
     *   **📐 Baseline Default (Neutral)**: Safe, flat-state fallback logic.
 *   **📷 Live Camera Mode**: Real-time video frame processing at 30 FPS with interactive face and pose coordinate overlays.
@@ -76,6 +77,26 @@ To package the app into a compressed, production-ready static bundle inside the 
 ```bash
 npm run build
 ```
+
+### 5. Training Classifiers
+You can train and export custom models to run locally:
+
+*   **Train Face Blendshapes MLP Classifier**:
+    ```bash
+    python3 train_classifier.py --epochs 20
+    ```
+    This trains the MLP classifier on MediaPipe blendshapes extracted from local images, saving checkpoints to `emotion_model.pkl` and exporting JSON weights to `public/model_weights.json` for web inference.
+
+*   **Train & Export Custom CNN (FERNet)**:
+    ```bash
+    python3 train_cnn.py --epochs 15
+    ```
+    This trains the custom `FERNet` CNN architecture (replicated from the training notebook) on grayscale images, utilizing Apple Silicon GPU (`mps`) acceleration if available, and exports the model directly into `public/cnn_onnx/model.onnx` along with Hugging Face compatible configurations.
+
+*   **Only Export PyTorch check-point to ONNX**:
+    ```bash
+    python3 train_cnn.py --onnx-only
+    ```
 
 ---
 
