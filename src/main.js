@@ -810,7 +810,7 @@ function drawVisualOverlays(canvas, results) {
   const emotionColor = metadata ? metadata.color : "#8B5CF6";
 
   const isMirrored = activeTab === "camera";
-  Visualizer.draw(canvas, faceResult, poseResult, emotionColor, isMirrored);
+  Visualizer.draw(canvas, faceResult, poseResult, emotionColor, isMirrored, emotionRes);
 }
 
 function handleOverlayCheckboxChange() {

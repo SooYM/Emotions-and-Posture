@@ -33,7 +33,7 @@ const L_BROW = [70, 63, 105, 66, 107, 55, 65, 52, 53, 46];
 const R_BROW = [300, 293, 334, 296, 336, 285, 295, 282, 283, 276];
 
 export class Visualizer {
-  static draw(canvas, faceResult, poseResult, defaultEmotionColor = "#8B5CF6", isMirrored = false) {
+  static draw(canvas, faceResult, poseResult, defaultEmotionColor = "#8B5CF6", isMirrored = false, primaryEmotionResult = null) {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -48,7 +48,8 @@ export class Visualizer {
         const landmarks = faceResult.faceLandmarks[i];
         
         // Classify emotion for this specific face index
-        const emotionRes = classifyEmotion(faceResult, i);
+        // Use primaryEmotionResult for the primary face (index 0) if available
+        const emotionRes = (i === 0 && primaryEmotionResult) ? primaryEmotionResult : classifyEmotion(faceResult, i);
         const metadata = EMOTION_METADATA[emotionRes.dominantEmotion];
         const emotionColor = metadata ? metadata.color : defaultEmotionColor;
         
