@@ -303,7 +303,7 @@ export function classifyEmotion(faceResult, faceIndex = 0) {
   let targetEngine = selectedModelEngine;
 
   // Auto-Select resolves to MLP first on synchronous calls if weights are loaded
-  if (targetEngine === "auto") {
+  if (targetEngine === "auto" || targetEngine === "cnn" || targetEngine === "vit") {
     if (modelWeights && modelWeights.type === "mlp") {
       targetEngine = "mlp";
     } else {
