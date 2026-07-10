@@ -70,6 +70,27 @@ env.allowLocalModels = true;
 env.allowRemoteModels = false; // Run strictly offline/locally
 env.useBrowserCache = false;   // Disable custom browser cache storage to prevent loaded 404 cache poisoning
 
+async function checkWebGPUSupport() {
+  const checkPromise = (async () => {
+    if (typeof navigator === 'undefined' || !navigator.gpu) return false;
+    try {
+      const adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) return false;
+      const device = await adapter.requestDevice();
+      if (!device) return false;
+      device.destroy();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })();
+  
+  return Promise.race([
+    checkPromise,
+    new Promise(resolve => setTimeout(() => resolve(false), 2000))
+  ]);
+}
+
 export async function loadModelWeights() {
   const mlpPromise = (async () => {
     try {
@@ -89,12 +110,18 @@ export async function loadModelWeights() {
 
   const vitPromise = (async () => {
     try {
-      console.log("Initializing Hugging Face Vision Transformer (ViT)...");
-      vitPipeline = await pipeline('image-classification', 'vit_onnx', {
-        device: 'webgpu', // Use WebGPU for extremely fast client-side inference
-        quantized: false  // Do not search for quantized versions, load model.onnx directly
-      });
-      console.log("Pre-trained Hugging Face ViT model loaded successfully with WebGPU.");
+      console.log("Checking WebGPU support for Hugging Face ViT model...");
+      const hasWebGPU = await checkWebGPUSupport();
+      if (hasWebGPU) {
+        console.log("Initializing Hugging Face Vision Transformer (ViT) on WebGPU...");
+        vitPipeline = await pipeline('image-classification', 'vit_onnx', {
+          device: 'webgpu', // Use WebGPU for extremely fast client-side inference
+          quantized: false  // Do not search for quantized versions, load model.onnx directly
+        });
+        console.log("Pre-trained Hugging Face ViT model loaded successfully with WebGPU.");
+      } else {
+        throw new Error("WebGPU is not supported or device creation timed out.");
+      }
     } catch (err) {
       modelLoadErrors.vitWebGPU = err.message;
       console.warn("Failed to load ViT on WebGPU. Retrying on CPU...", err);
