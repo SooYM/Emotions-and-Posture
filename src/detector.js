@@ -1,8 +1,8 @@
 import { FilesetResolver, FaceLandmarker, PoseLandmarker } from "@mediapipe/tasks-vision";
 
-// Model URLs from Google Storage CDN
-const FACE_MODEL_URL = "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task";
-const POSE_MODEL_URL = "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task";
+// Model URLs from local directory (saves network delay and works 100% offline)
+const FACE_MODEL_URL = "/face_landmarker.task";
+const POSE_MODEL_URL = "/pose_landmarker_full.task";
 
 class MediaPipeDetector {
   constructor() {
@@ -17,7 +17,7 @@ class MediaPipeDetector {
       if (onProgress) onProgress("Initializing Fileset Resolver...");
       
       const vision = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+        "/mediapipe_wasm"
       );
 
       if (onProgress) onProgress("Loading Face Landmarker model (~5MB)...");

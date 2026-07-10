@@ -225,13 +225,48 @@ async function initializeApp() {
     // Smooth transition out for loading screen
     setTimeout(() => {
       dom.loadingOverlay.classList.add("fade-out");
+      setTimeout(() => {
+        dom.loadingOverlay.style.display = "none";
+      }, 500);
       addLog("System ready. WebAssembly models online.", "system");
       initializeDatasetValidation(); // Load default folder list on load
     }, 400);
 
   } catch (error) {
+    console.error("System initialization failed:", error);
     dom.loadingStatus.innerHTML = `<span style="color:#EF4444">Initialization Failed: ${error.message}</span>`;
-    addLog(`Neural network load error: ${error.message}`, "error");
+    addLog(`System initialization failed: ${error.message}`, "error");
+    dom.modelStatusText.innerText = "Error: MediaPipe landmarker models failed to load. Camera tracking disabled.";
+    dom.modelStatusText.style.color = "#EF4444";
+
+    clearInterval(progressInterval);
+    dom.loadingBar.style.width = "100%";
+    dom.loadingBar.style.backgroundColor = "#EF4444";
+
+    // Append a dismiss button to allow entering the app in fallback mode
+    const existingBtn = dom.loadingOverlay.querySelector(".dismiss-btn");
+    if (!existingBtn) {
+      const dismissBtn = document.createElement("button");
+      dismissBtn.className = "dismiss-btn";
+      dismissBtn.innerText = "Dismiss and Enter App";
+      dismissBtn.style.marginTop = "20px";
+      dismissBtn.style.padding = "10px 20px";
+      dismissBtn.style.backgroundColor = "#3B82F6";
+      dismissBtn.style.color = "white";
+      dismissBtn.style.border = "none";
+      dismissBtn.style.borderRadius = "6px";
+      dismissBtn.style.cursor = "pointer";
+      dismissBtn.style.fontWeight = "bold";
+      dismissBtn.onclick = () => {
+        dom.loadingOverlay.classList.add("fade-out");
+        setTimeout(() => {
+          dom.loadingOverlay.style.display = "none";
+        }, 500);
+      };
+      
+      const container = dom.loadingOverlay.querySelector(".loading-card") || dom.loadingOverlay;
+      container.appendChild(dismissBtn);
+    }
   }
 }
 
