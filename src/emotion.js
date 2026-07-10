@@ -1,5 +1,4 @@
 import { pipeline, env, RawImage } from '@huggingface/transformers';
-import { InferenceSession, Tensor } from 'onnxruntime-web';
 
 export const EMOTIONS = {
   HAPPY: "happy",
@@ -61,10 +60,11 @@ if (typeof window !== 'undefined' && window.location) {
 }
 if (typeof window !== 'undefined' && window.location) {
   env.backends.onnx.wasm.wasmPaths = window.location.origin + '/';
-  ortEnv.wasm.wasmPaths = window.location.origin + '/';
+  if (window.ort) {
+    window.ort.env.wasm.wasmPaths = window.location.origin + '/';
+  }
 } else {
   env.backends.onnx.wasm.wasmPaths = '/';
-  ortEnv.wasm.wasmPaths = '/';
 }
 env.allowLocalModels = true;
 env.allowRemoteModels = false; // Run strictly offline/locally
@@ -144,7 +144,7 @@ export async function loadModelWeights(onModelLoaded = null) {
   const cnnPromise = (async () => {
     try {
       console.log("Initializing Custom PyTorch CNN (FERNet) via ONNX Runtime WASM...");
-      cnnSession = await InferenceSession.create('/cnn_onnx/model.onnx', {
+      cnnSession = await window.ort.InferenceSession.create('/cnn_onnx/model.onnx', {
         executionProviders: ['wasm']
       });
       console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully on WASM.");
@@ -229,7 +229,7 @@ export async function classifyEmotionCNN(canvasOrImage) {
   }
   try {
     const float32Data = preprocessCanvasTo48x48Grayscale(canvasOrImage);
-    const inputTensor = new Tensor('float32', float32Data, [1, 1, 48, 48]);
+    const inputTensor = new window.ort.Tensor('float32', float32Data, [1, 1, 48, 48]);
     
     const outputMap = await cnnSession.run({ 'input': inputTensor });
     const outputTensor = outputMap['output'];
