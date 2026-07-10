@@ -33,7 +33,7 @@ const L_BROW = [70, 63, 105, 66, 107, 55, 65, 52, 53, 46];
 const R_BROW = [300, 293, 334, 296, 336, 285, 295, 282, 283, 276];
 
 export class Visualizer {
-  static draw(canvas, faceResult, poseResult, defaultEmotionColor = "#8B5CF6", isMirrored = false, primaryEmotionResult = null) {
+  static draw(canvas, faceResult, poseResult, defaultEmotionColor = "#8B5CF6", isMirrored = false, primaryEmotionResult = null, recognizedNames = []) {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -53,16 +53,60 @@ export class Visualizer {
         const metadata = EMOTION_METADATA[emotionRes.dominantEmotion];
         const emotionColor = metadata ? metadata.color : defaultEmotionColor;
         
+        // Find recognized name for this face by matching bounding box overlap
+        let recognizedName = null;
+        if (recognizedNames.length > 0) {
+          recognizedName = this.findMatchingName(landmarks, canvas.width, canvas.height, isMirrored, recognizedNames);
+        }
+        
         // Draw face mesh coordinates (point cloud and contours)
         this.drawFace(ctx, landmarks, canvas.width, canvas.height, emotionColor, isMirrored);
 
         // Draw bounding box and label above the face
-        this.drawFaceBoundingBox(ctx, landmarks, canvas.width, canvas.height, emotionRes, metadata, emotionColor, isMirrored);
+        this.drawFaceBoundingBox(ctx, landmarks, canvas.width, canvas.height, emotionRes, metadata, emotionColor, isMirrored, recognizedName);
       }
     }
   }
 
-  static drawFaceBoundingBox(ctx, landmarks, width, height, emotionRes, metadata, color, isMirrored) {
+  /**
+   * Find matching recognized name for a MediaPipe face by comparing bounding box centers.
+   */
+  static findMatchingName(landmarks, canvasW, canvasH, isMirrored, recognizedNames) {
+    // Compute MediaPipe face center
+    let minX = 1, maxX = 0, minY = 1, maxY = 0;
+    for (const lm of landmarks) {
+      if (lm.x < minX) minX = lm.x;
+      if (lm.x > maxX) maxX = lm.x;
+      if (lm.y < minY) minY = lm.y;
+      if (lm.y > maxY) maxY = lm.y;
+    }
+    const mpCenterX = isMirrored ? (1.0 - (minX + maxX) / 2) * canvasW : ((minX + maxX) / 2) * canvasW;
+    const mpCenterY = ((minY + maxY) / 2) * canvasH;
+    
+    let bestMatch = null;
+    let bestDist = Infinity;
+    
+    for (const rec of recognizedNames) {
+      if (!rec.name || !rec.box) continue;
+      // face-api box is in pixel coordinates, mirrored in the same canvas space
+      const recCenterX = isMirrored ? (canvasW - (rec.box.x + rec.box.width / 2)) : (rec.box.x + rec.box.width / 2);
+      const recCenterY = rec.box.y + rec.box.height / 2;
+      const dist = Math.sqrt((mpCenterX - recCenterX) ** 2 + (mpCenterY - recCenterY) ** 2);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestMatch = rec;
+      }
+    }
+    
+    // Only match if centers are within a reasonable distance (half the face width)
+    const faceWidth = (maxX - minX) * canvasW;
+    if (bestMatch && bestDist < faceWidth * 0.8) {
+      return bestMatch.name;
+    }
+    return null;
+  }
+
+  static drawFaceBoundingBox(ctx, landmarks, width, height, emotionRes, metadata, color, isMirrored, recognizedName = null) {
     let minX = 1, maxX = 0, minY = 1, maxY = 0;
     for (const lm of landmarks) {
       if (lm.x < minX) minX = lm.x;
@@ -120,6 +164,26 @@ export class Visualizer {
     const percentage = Math.round(emotionRes.confidence * 100);
     const labelText = `${metadata.emoji} ${metadata.label} (${percentage}%)`;
     ctx.fillText(labelText, x + 8, labelY + labelHeight / 2);
+
+    // Draw recognized name tag below the bounding box
+    if (recognizedName) {
+      const nameHeight = 22;
+      const nameY = y + h + 2;
+      
+      ctx.fillStyle = "rgba(139, 92, 246, 0.85)";
+      const nameWidth = ctx.measureText(`👤 ${recognizedName}`).width + 16;
+      const nameX = x + (w - nameWidth) / 2; // Center below box
+      ctx.beginPath();
+      ctx.roundRect(nameX, nameY, nameWidth, nameHeight, 4);
+      ctx.fill();
+      
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "bold 12px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(`👤 ${recognizedName}`, nameX + nameWidth / 2, nameY + nameHeight / 2);
+      ctx.textAlign = "left"; // Reset
+    }
   }
 
   static drawPose(ctx, landmarks, width, height, isMirrored) {

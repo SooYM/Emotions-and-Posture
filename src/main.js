@@ -2,6 +2,7 @@ import { detectorInstance } from "./detector.js";
 import { classifyEmotion, EMOTION_METADATA, EMOTIONS, loadModelWeights, classifyEmotionViT, classifyEmotionCNN, selectedModelEngine, setSelectedModelEngine, vitPipeline, cnnSession, modelWeights, modelLoadErrors } from "./emotion.js";
 import { classifyPosture, POSTURE_METADATA, POSTURES } from "./posture.js";
 import { Visualizer } from "./visualizer.js";
+import { initFaceRecognition, registerFace, detectFaceDescriptors, matchFaces, unregisterFace, clearAllFaces, getRegisteredFaces, isFaceRecognitionReady, hasRegisteredFaces } from "./faceRecognition.js";
 
 // DOM Cache
 const dom = {
@@ -107,7 +108,13 @@ const dom = {
   activeModelDot: document.getElementById("active-model-dot"),
   validationModelEngine: document.getElementById("validation-model-engine"),
   btnCopySystemLogs: document.getElementById("btn-copy-system-logs"),
-  btnCopyValLogs: document.getElementById("btn-copy-val-logs")
+  btnCopyValLogs: document.getElementById("btn-copy-val-logs"),
+  // Face Recognition
+  faceRegName: document.getElementById("face-reg-name"),
+  btnRegisterFace: document.getElementById("btn-register-face"),
+  faceRegStatus: document.getElementById("face-reg-status"),
+  registeredFacesList: document.getElementById("registered-faces-list"),
+  btnClearAllFaces: document.getElementById("btn-clear-all-faces")
 };
 
 // Global App State
@@ -120,6 +127,8 @@ let fpsList = [];
 let cachedLastResults = { faceResult: null, poseResult: null };
 let isEmotionInferenceRunning = false;
 let lastEmotionResult = null;
+let lastRecognizedNames = []; // Array of { name, box } from face recognition
+let isFaceRecRunning = false;
 
 // Validation Suite State
 let validationQueue = [];
@@ -247,6 +256,16 @@ async function initializeApp() {
       }
       if (modelLoadErrors.cnnCPU) {
         addLog(`CNN model failed to load: ${modelLoadErrors.cnnCPU}`, "error");
+      }
+    });
+
+    // Load face recognition models in background
+    initFaceRecognition((statusMsg) => {
+      addLog(statusMsg, "system");
+    }).then((success) => {
+      if (success) {
+        addLog("👤 Face recognition module ready.", "success");
+        renderRegisteredFacesList();
       }
     });
 
@@ -475,6 +494,17 @@ async function processCameraFrame() {
 
     // Classify and display results
     updateAnalysisResults(results, dom.webcamVideo);
+
+    // Run face recognition matching in background (throttled to avoid FPS drops)
+    if (!isFaceRecRunning && isFaceRecognitionReady() && hasRegisteredFaces()) {
+      isFaceRecRunning = true;
+      detectFaceDescriptors(dom.webcamVideo).then(detections => {
+        lastRecognizedNames = matchFaces(detections);
+        isFaceRecRunning = false;
+      }).catch(() => {
+        isFaceRecRunning = false;
+      });
+    }
 
     // Draw overlays on canvas
     drawVisualOverlays(dom.webcamCanvas, results);
@@ -810,7 +840,7 @@ function drawVisualOverlays(canvas, results) {
   const emotionColor = metadata ? metadata.color : "#8B5CF6";
 
   const isMirrored = activeTab === "camera";
-  Visualizer.draw(canvas, faceResult, poseResult, emotionColor, isMirrored, emotionRes);
+  Visualizer.draw(canvas, faceResult, poseResult, emotionColor, isMirrored, emotionRes, lastRecognizedNames);
 }
 
 function handleOverlayCheckboxChange() {
@@ -1519,6 +1549,80 @@ function setupEventListeners() {
   });
 }
 
+// --- Face Recognition UI Helpers ---
+async function handleRegisterFace() {
+  const name = dom.faceRegName.value;
+  dom.faceRegStatus.className = "face-reg-status";
+  dom.faceRegStatus.innerText = "Capturing face...";
+  dom.btnRegisterFace.disabled = true;
+  
+  try {
+    const source = dom.webcamVideo;
+    if (!isCameraRunning || !source.srcObject) {
+      dom.faceRegStatus.className = "face-reg-status error";
+      dom.faceRegStatus.innerText = "Camera must be running to register a face.";
+      dom.btnRegisterFace.disabled = false;
+      return;
+    }
+    
+    const result = await registerFace(name, source);
+    dom.faceRegStatus.className = `face-reg-status ${result.success ? 'success' : 'error'}`;
+    dom.faceRegStatus.innerText = result.message;
+    
+    if (result.success) {
+      dom.faceRegName.value = "";
+      addLog(`👤 ${result.message}`, "success");
+      renderRegisteredFacesList();
+    }
+  } catch (err) {
+    dom.faceRegStatus.className = "face-reg-status error";
+    dom.faceRegStatus.innerText = `Error: ${err.message}`;
+  }
+  
+  dom.btnRegisterFace.disabled = false;
+}
+
+function renderRegisteredFacesList() {
+  const faces = getRegisteredFaces();
+  
+  if (faces.length === 0) {
+    dom.registeredFacesList.innerHTML = '<p class="text-muted" style="font-size: 12px; margin: 0;">No faces registered yet.</p>';
+    return;
+  }
+  
+  dom.registeredFacesList.innerHTML = faces.map(f => 
+    `<span class="face-tag">
+      👤 ${f.name} <span class="face-tag-count">(${f.sampleCount})</span>
+      <span class="face-tag-remove" data-name="${f.name}" title="Remove ${f.name}">✕</span>
+    </span>`
+  ).join('');
+  
+  // Attach remove handlers
+  dom.registeredFacesList.querySelectorAll('.face-tag-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const name = btn.getAttribute('data-name');
+      unregisterFace(name);
+      addLog(`👤 Unregistered face: "${name}"`, "system");
+      renderRegisteredFacesList();
+    });
+  });
+}
+
 // Start
 setupEventListeners();
 initializeApp();
+
+// Face Recognition Event Listeners (after DOM is ready)
+dom.btnRegisterFace.addEventListener("click", handleRegisterFace);
+dom.faceRegName.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") handleRegisterFace();
+});
+dom.btnClearAllFaces.addEventListener("click", () => {
+  if (getRegisteredFaces().length === 0) return;
+  clearAllFaces();
+  lastRecognizedNames = [];
+  addLog("👤 All registered faces cleared.", "system");
+  renderRegisteredFacesList();
+  dom.faceRegStatus.className = "face-reg-status";
+  dom.faceRegStatus.innerText = "";
+});

@@ -243,6 +243,24 @@
               </label>
             </div>
           </div>
+
+          <!-- Face Recognition Panel -->
+          <div class="settings-panel" id="face-recognition-panel">
+            <h4>👤 Face Recognition</h4>
+            <div class="face-reg-controls">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="face-reg-name" class="face-reg-input" placeholder="Enter name..." maxlength="30" />
+                <button id="btn-register-face" class="btn btn-primary btn-sm" title="Capture and register current face">📸 Register</button>
+              </div>
+              <p id="face-reg-status" class="face-reg-status"></p>
+            </div>
+            <div id="registered-faces-list" class="registered-faces-list">
+              <p class="text-muted" style="font-size: 12px; margin: 0;">No faces registered yet.</p>
+            </div>
+            <div style="margin-top: 8px; display: flex; gap: 8px;">
+              <button id="btn-clear-all-faces" class="btn btn-secondary btn-sm" style="font-size: 11px;">🗑 Clear All</button>
+            </div>
+          </div>
         </section>
 
         <!-- Right Column: Results & Analytics -->
