@@ -973,11 +973,19 @@ function prepareDatasetQueue() {
   const rawList = isPreloaded ? preloadedManifest : customUploadedFiles;
   
   const splitFilter = dom.validationSplitFilter.value;
+  let tempQueue = [];
   if (splitFilter === "all") {
-    validationQueue = [...rawList];
+    tempQueue = [...rawList];
   } else {
-    validationQueue = rawList.filter(item => item.split === splitFilter);
+    tempQueue = rawList.filter(item => item.split === splitFilter);
   }
+
+  // Shuffle queue randomly to validate across a random mixture of multiple emotions
+  for (let i = tempQueue.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tempQueue[i], tempQueue[j]] = [tempQueue[j], tempQueue[i]];
+  }
+  validationQueue = tempQueue;
   
   if (validationQueue.length === 0) {
     dom.validationScanStatus.className = "scan-status-alert error";
