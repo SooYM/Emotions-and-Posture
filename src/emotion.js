@@ -61,8 +61,10 @@ if (typeof window !== 'undefined' && window.location) {
 }
 if (typeof window !== 'undefined' && window.location) {
   env.backends.onnx.wasm.wasmPaths = window.location.origin + '/';
+  ortEnv.wasm.wasmPaths = window.location.origin + '/';
 } else {
   env.backends.onnx.wasm.wasmPaths = '/';
+  ortEnv.wasm.wasmPaths = '/';
 }
 env.allowLocalModels = true;
 env.allowRemoteModels = false; // Run strictly offline/locally
@@ -110,7 +112,7 @@ export async function loadModelWeights() {
   // 3. Load Custom PyTorch CNN (FERNet) model
   try {
     console.log("Initializing Custom PyTorch CNN (FERNet) via ONNX Runtime...");
-    cnnSession = await InferenceSession.create(window.location.origin + '/cnn_onnx/model.onnx', {
+    cnnSession = await InferenceSession.create('/cnn_onnx/model.onnx', {
       executionProviders: ['webgpu', 'wasm']
     });
     console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully.");
@@ -118,7 +120,7 @@ export async function loadModelWeights() {
     modelLoadErrors.cnnWebGPU = err.message;
     console.warn("Failed to load CNN on WebGPU. Retrying with wasm provider...", err);
     try {
-      cnnSession = await InferenceSession.create(window.location.origin + '/cnn_onnx/model.onnx', {
+      cnnSession = await InferenceSession.create('/cnn_onnx/model.onnx', {
         executionProviders: ['wasm']
       });
       console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully on CPU.");
@@ -201,8 +203,8 @@ export async function classifyEmotionCNN(canvasOrImage) {
     const float32Data = preprocessCanvasTo48x48Grayscale(canvasOrImage);
     const inputTensor = new Tensor('float32', float32Data, [1, 1, 48, 48]);
     
-    const outputMap = await cnnSession.run({ [cnnSession.inputNames[0]]: inputTensor });
-    const outputTensor = outputMap[cnnSession.outputNames[0]];
+    const outputMap = await cnnSession.run({ 'input': inputTensor });
+    const outputTensor = outputMap['output'];
     const logits = outputTensor.data;
     
     // Apply Softmax activation
