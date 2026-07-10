@@ -22,9 +22,12 @@ export const EMOTION_METADATA = {
 
 export let modelWeights = null;
 export let vitPipeline = null;
+export let cnnPipeline = null;
 export let modelLoadErrors = {
   vitWebGPU: null,
   vitCPU: null,
+  cnnWebGPU: null,
+  cnnCPU: null,
   mlp: null
 };
 
@@ -102,6 +105,29 @@ export async function loadModelWeights() {
       console.error("Failed to load ViT model. Emotion classification will fall back to MLP/Heuristics.", cpuErr);
     }
   }
+
+  // 3. Load Custom PyTorch CNN (FERNet) model
+  try {
+    console.log("Initializing Custom PyTorch CNN (FERNet)...");
+    cnnPipeline = await pipeline('image-classification', 'cnn_onnx', {
+      device: 'webgpu', // Use WebGPU for fast client-side inference
+      quantized: false
+    });
+    console.log("Custom PyTorch CNN (FERNet) model loaded successfully with WebGPU.");
+  } catch (err) {
+    modelLoadErrors.cnnWebGPU = err.message;
+    console.warn("Failed to load CNN on WebGPU. Retrying on CPU...", err);
+    try {
+      cnnPipeline = await pipeline('image-classification', 'cnn_onnx', {
+        device: 'wasm', // Fallback to WebAssembly CPU
+        quantized: false
+      });
+      console.log("Custom PyTorch CNN (FERNet) model loaded successfully on CPU.");
+    } catch (cpuErr) {
+      modelLoadErrors.cnnCPU = cpuErr.message;
+      console.error("Failed to load CNN model.", cpuErr);
+    }
+  }
 }
 
 export async function classifyEmotionViT(canvasOrImage) {
@@ -137,6 +163,42 @@ export async function classifyEmotionViT(canvasOrImage) {
     confidence: maxScore,
     scores,
     activeModel: "vit"
+  };
+}
+
+export async function classifyEmotionCNN(canvasOrImage) {
+  if (!cnnPipeline) {
+    return null;
+  }
+  let input = canvasOrImage;
+  if (canvasOrImage instanceof HTMLCanvasElement) {
+    input = RawImage.fromCanvas(canvasOrImage);
+  }
+  const output = await cnnPipeline(input);
+  const scores = {};
+  for (const e of Object.values(EMOTIONS)) {
+    scores[e] = 0;
+  }
+  
+  let dominantEmotion = EMOTIONS.NEUTRAL;
+  let maxScore = -1;
+  
+  for (const item of output) {
+    const internalKey = HF_TO_INTERNAL[item.label.toLowerCase()];
+    if (internalKey) {
+      scores[internalKey] = item.score;
+      if (item.score > maxScore) {
+        maxScore = item.score;
+        dominantEmotion = internalKey;
+      }
+    }
+  }
+  
+  return {
+    dominantEmotion,
+    confidence: maxScore,
+    scores,
+    activeModel: "cnn"
   };
 }
 

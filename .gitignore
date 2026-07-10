@@ -24,9 +24,12 @@ dist-ssr
 *.sw?
 
 # Dataset files
+Dataset
 Dataset/
+public/Dataset
 public/Dataset/
 dataset_features.npz
+cnn_model.pth
 
 # Large model weights (exceeds GitHub's 100MB limit)
 *.onnx
