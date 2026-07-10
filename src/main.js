@@ -159,6 +159,37 @@ function resetConfusionMatrix() {
 }
 resetConfusionMatrix();
 
+// --- Console Redirector for Telemetry and UI Diagnostics ---
+const originalConsoleError = console.error;
+console.error = function(...args) {
+  originalConsoleError.apply(console, args);
+  const msg = args.map(a => {
+    if (a instanceof Error) return a.message;
+    if (typeof a === 'object') {
+      try { return JSON.stringify(a); } catch { return String(a); }
+    }
+    return String(a);
+  }).join(' ');
+  if (typeof dom !== 'undefined' && dom.logsContainer) {
+    addLog(`Console Error: ${msg}`, "error");
+  }
+};
+
+const originalConsoleWarn = console.warn;
+console.warn = function(...args) {
+  originalConsoleWarn.apply(console, args);
+  const msg = args.map(a => {
+    if (a instanceof Error) return a.message;
+    if (typeof a === 'object') {
+      try { return JSON.stringify(a); } catch { return String(a); }
+    }
+    return String(a);
+  }).join(' ');
+  if (typeof dom !== 'undefined' && dom.logsContainer) {
+    addLog(`Console Warning: ${msg}`, "warning");
+  }
+};
+
 // --- Logger Helper ---
 function addLog(text, type = "info") {
   const time = new Date().toLocaleTimeString();
