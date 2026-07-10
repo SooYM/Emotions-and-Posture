@@ -194,10 +194,18 @@ def main():
 
     # Resume training if checkpoint exists
     start_epoch = 0
-    if os.path.exists(model_path):
-        print(f"Resuming training from checkpoint: {model_path}...")
+    checkpoint_path = "cnn_checkpoint.pth"
+    if os.path.exists(checkpoint_path):
+        print(f"Resuming training from checkpoint: {checkpoint_path}...")
+        checkpoint = torch.load(checkpoint_path, map_location=device)
+        model.load_state_dict(checkpoint['model_state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        start_epoch = checkpoint['epoch']
+        print(f"Checkpoint loaded successfully. Resuming from epoch {start_epoch} (total epochs trained so far: {start_epoch}).")
+    elif os.path.exists(model_path):
+        print(f"Resuming training from raw model weights: {model_path}...")
         model.load_state_dict(torch.load(model_path, map_location=device))
-        print("Checkpoint weights loaded successfully.")
+        print("Model weights loaded successfully.")
 
     print("\nTraining CNN Model started...")
     for epoch in range(start_epoch + 1, start_epoch + args.epochs + 1):
@@ -252,6 +260,11 @@ def main():
 
         # Save checkpoint and export to ONNX at the end of every epoch for live updates in the browser
         torch.save(model.state_dict(), model_path)
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+        }, checkpoint_path)
         export_onnx(model_path, onnx_dir)
 
 if __name__ == "__main__":
