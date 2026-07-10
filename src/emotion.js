@@ -71,64 +71,61 @@ env.allowRemoteModels = false; // Run strictly offline/locally
 env.useBrowserCache = false;   // Disable custom browser cache storage to prevent loaded 404 cache poisoning
 
 export async function loadModelWeights() {
-  // 1. Load Custom MLP Classifier Weights
-  try {
-    const response = await fetch("/model_weights.json");
-    if (response.ok) {
-      modelWeights = await response.json();
-      console.log("Successfully loaded machine-learned emotion classification weights.", modelWeights);
-    } else {
-      modelLoadErrors.mlp = `Weights file status: ${response.status} ${response.statusText}`;
-      console.warn("Pre-trained model weights JSON not found. Defaulting to rule-based heuristics.");
-    }
-  } catch (err) {
-    modelLoadErrors.mlp = err.message;
-    console.warn("Failed to retrieve model weights. Defaulting to rule-based heuristics.", err);
-  }
-
-  // 2. Load Hugging Face ViT model
-  try {
-    console.log("Initializing Hugging Face Vision Transformer (ViT)...");
-    vitPipeline = await pipeline('image-classification', 'vit_onnx', {
-      device: 'webgpu', // Use WebGPU for extremely fast client-side inference
-      quantized: false  // Do not search for quantized versions, load model.onnx directly
-    });
-    console.log("Pre-trained Hugging Face ViT model loaded successfully with WebGPU.");
-  } catch (err) {
-    modelLoadErrors.vitWebGPU = err.message;
-    console.warn("Failed to load ViT on WebGPU. Retrying on CPU...", err);
+  const mlpPromise = (async () => {
     try {
+      const response = await fetch("/model_weights.json");
+      if (response.ok) {
+        modelWeights = await response.json();
+        console.log("Successfully loaded machine-learned emotion classification weights.", modelWeights);
+      } else {
+        modelLoadErrors.mlp = `Weights file status: ${response.status} ${response.statusText}`;
+        console.warn("Pre-trained model weights JSON not found. Defaulting to rule-based heuristics.");
+      }
+    } catch (err) {
+      modelLoadErrors.mlp = err.message;
+      console.warn("Failed to retrieve model weights. Defaulting to rule-based heuristics.", err);
+    }
+  })();
+
+  const vitPromise = (async () => {
+    try {
+      console.log("Initializing Hugging Face Vision Transformer (ViT)...");
       vitPipeline = await pipeline('image-classification', 'vit_onnx', {
-        device: 'wasm', // Fallback to WebAssembly CPU
-        quantized: false
+        device: 'webgpu', // Use WebGPU for extremely fast client-side inference
+        quantized: false  // Do not search for quantized versions, load model.onnx directly
       });
-      console.log("Pre-trained Hugging Face ViT model loaded successfully on CPU.");
-    } catch (cpuErr) {
-      modelLoadErrors.vitCPU = cpuErr.message;
-      console.error("Failed to load ViT model. Emotion classification will fall back to MLP/Heuristics.", cpuErr);
+      console.log("Pre-trained Hugging Face ViT model loaded successfully with WebGPU.");
+    } catch (err) {
+      modelLoadErrors.vitWebGPU = err.message;
+      console.warn("Failed to load ViT on WebGPU. Retrying on CPU...", err);
+      try {
+        vitPipeline = await pipeline('image-classification', 'vit_onnx', {
+          device: 'wasm', // Fallback to WebAssembly CPU
+          quantized: false
+        });
+        console.log("Pre-trained Hugging Face ViT model loaded successfully on CPU.");
+      } catch (cpuErr) {
+        modelLoadErrors.vitCPU = cpuErr.message;
+        console.error("Failed to load ViT model. Emotion classification will fall back to MLP/Heuristics.", cpuErr);
+      }
     }
-  }
+  })();
 
-  // 3. Load Custom PyTorch CNN (FERNet) model
-  try {
-    console.log("Initializing Custom PyTorch CNN (FERNet) via ONNX Runtime...");
-    cnnSession = await InferenceSession.create('/cnn_onnx/model.onnx', {
-      executionProviders: ['webgpu', 'wasm']
-    });
-    console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully.");
-  } catch (err) {
-    modelLoadErrors.cnnWebGPU = err.message;
-    console.warn("Failed to load CNN on WebGPU. Retrying with wasm provider...", err);
+  const cnnPromise = (async () => {
     try {
+      console.log("Initializing Custom PyTorch CNN (FERNet) via ONNX Runtime WASM...");
       cnnSession = await InferenceSession.create('/cnn_onnx/model.onnx', {
         executionProviders: ['wasm']
       });
-      console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully on CPU.");
-    } catch (cpuErr) {
-      modelLoadErrors.cnnCPU = cpuErr.message;
-      console.error("Failed to load CNN model.", cpuErr);
+      console.log("Custom PyTorch CNN (FERNet) ONNX model loaded successfully on WASM.");
+    } catch (err) {
+      modelLoadErrors.cnnCPU = err.message;
+      console.error("Failed to load CNN model on WASM:", err);
     }
-  }
+  })();
+
+  // Execute all loading processes in parallel
+  await Promise.all([mlpPromise, vitPromise, cnnPromise]);
 }
 
 export async function classifyEmotionViT(canvasOrImage) {
